@@ -1,1 +1,27 @@
 @import 'tailwindcss';
+
+/* root styles */
+
+/* media preferences */
+
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #fefefe 0%, #e1e1e1 100%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+@layer components{
+    /* Navbar styling */
+    .nav-container{
+        @apply h-[calc(7rem)] backdrop-blur-2xl bg-transparent rounded-b-lg 
+        shadow-md top-0 sticky w-[95%] mx-auto p-4 mt-1
+    }
+
+    .nav-wrapper{
+        @apply flex flex-row flex-1 p-2 h-full items-center justify-around
+    }
+}
