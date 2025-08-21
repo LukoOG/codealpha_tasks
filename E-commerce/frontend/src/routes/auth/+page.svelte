@@ -27,10 +27,14 @@
 
 <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100">
   <div class="bg-white/80 backdrop-blur-md shadow-lg rounded-2xl p-8 w-full max-w-md">
-    <h2 class="text-3xl font-bold mb-6 text-center text-orange-600">Login</h2>
+    <h2 class="text-3xl font-bold mb-6 text-center text-orange-600">{form ? form.slice(0, 1).toUpperCase() + form.slice(1) : "Error"}</h2>
 
     <form method="POST" class="space-y-4">
-
+        {#if form == "login"}
+            <Login />
+        {:else if form == "register"}
+            <Register />
+        {/if}
       {@render changeFormBtn(form)}
     </form>
 
