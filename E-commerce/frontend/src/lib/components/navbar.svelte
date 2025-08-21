@@ -1,12 +1,18 @@
 <script lang="ts">
+    import { goto } from "$app/navigation"
     let authenticated = $state<boolean>(false)
+
+    const updateSearchParams = (query: "login" | "register") => {
+        const param = new URLSearchParams({form: query})
+        return goto(`auth?${param.toString()}`)
+    }
 </script>
 
 {#snippet actions()}
     <div class='actions'>
         {#if authenticated}
-            <button onclick={()=>{console.log('login'); authenticated = !authenticated}}>Login</button>
-            <button>Register</button>
+            <button onclick={()=>{updateSearchParams("login")}}>Login</button>
+            <button onclick={()=>{updateSearchParams("register")}}>Register</button>
         {:else if !authenticated}
             <button onclick={()=>{console.log('logout'); authenticated = !authenticated}}>Logout</button>
         {/if}
