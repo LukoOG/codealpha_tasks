@@ -21,3 +21,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         # password = validated_data.pop('password')
         # user = User.objects.create(**validated_date)
         # return user
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = user
+        fields = [
+            'id', 'email', 'username', 'first_name', 'last_name', 'phone_number', 'shipping_address'
+        ]

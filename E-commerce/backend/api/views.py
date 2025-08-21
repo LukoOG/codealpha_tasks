@@ -16,3 +16,4 @@ def index(request):
         'list of url routes': '/index',
     }
     return Response(context)
+
