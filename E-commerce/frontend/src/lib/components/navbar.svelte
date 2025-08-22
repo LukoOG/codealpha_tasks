@@ -3,7 +3,7 @@
     let authenticated = $state<boolean>(false)
 
     const updateSearchParams = (query: "login" | "register") => {
-        const param = new URLSearchParams({form: query})
+        const param = new URLSearchParams({form_state: query})
         return goto(`auth?${param.toString()}`)
     }
 </script>

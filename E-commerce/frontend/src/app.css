@@ -20,7 +20,7 @@ body{
     /* Navbar styling */
     .nav-container{
         @apply h-[calc(7rem)] backdrop-blur-2xl bg-transparent rounded-b-lg 
-        shadow-md top-0 sticky w-[95%] mx-auto p-4 mt-1
+        shadow-md top-0 relative w-[95%] mx-auto p-4 mt-1
     }
 
     .nav-wrapper{

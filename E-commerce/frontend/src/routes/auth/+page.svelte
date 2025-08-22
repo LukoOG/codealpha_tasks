@@ -5,7 +5,7 @@
     import Login from "$lib/components/auth/login.svelte";
     import Register from "$lib/components/auth/register.svelte";
 
-    const form = $derived(page.url.searchParams.get("form"))
+    const form_state = $derived(page.url.searchParams.get("form_state"))
 
     const updateAuthSearchParams = (value: string) => {
         const params = page.url.searchParams
@@ -30,12 +30,12 @@
     <h2 class="text-3xl font-bold mb-6 text-center text-orange-600">{form ? form.slice(0, 1).toUpperCase() + form.slice(1) : "Error"}</h2>
 
     <form method="POST" class="space-y-4">
-        {#if form == "login"}
+        {#if form_state == "login"}
             <Login />
-        {:else if form == "register"}
+        {:else if form_state == "register"}
             <Register />
         {/if}
-      {@render changeFormBtn(form)}
+      {@render changeFormBtn(form_state)}
     </form>
 
   </div>
