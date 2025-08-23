@@ -1,10 +1,12 @@
 <script lang="ts">
     import Navbar from "../lib/components/navbar.svelte";
+	import { page } from "$app/state"
+    let user = page.data.user
 </script>
 
 <div>
     <section class="">
-        <Navbar />
+        <Navbar { user } />
     </section>
     <section class="min-h-screen flex flex-col items-center justify-center">
         <div class="text-center max-w-2xl px-4">
