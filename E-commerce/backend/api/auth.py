@@ -38,6 +38,7 @@ class LoginTokenObtainPairView(TokenObtainPairView):
             data = response.data
             access = data.get("access")
             refresh = data.get("refresh")
+            print(access)
 
             # Set cookies
             response.set_cookie(
@@ -45,15 +46,16 @@ class LoginTokenObtainPairView(TokenObtainPairView):
                 value=access,
                 httponly=True,
                 secure=True,  
-                samesite="Lax",  
+                samesite="None",
                 max_age=60 * 15,
             )
+            
             response.set_cookie(
                 key="refreshToken",
                 value=refresh,
                 httponly=True,
                 secure=True,
-                samesite="Lax",
+                samesite="None",
                 max_age=60 * 60 * 24 * 7,
             )
 
