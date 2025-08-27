@@ -12,6 +12,15 @@
         const param = new URLSearchParams({form_state: query})
         return goto(`auth?${param.toString()}`)
     }
+
+    // test
+    const logout = async () =>{
+        const res = await fetch("http://127.0.0.1:8000/api/auth/logout", { method: "POST"})
+        if (res.ok){
+            return true
+        }
+        return false
+    }
 </script>
 
 {#snippet actions()}
@@ -20,7 +29,7 @@
             <button onclick={()=>{updateSearchParams("login")}}>Login</button>
             <button onclick={()=>{updateSearchParams("register")}}>Register</button>
         {:else if authenticated}
-            <button onclick={()=>{console.log('logout')}}>Logout</button>
+            <button onclick={logout}>Logout</button>
         {/if}
     </div>
 {/snippet}

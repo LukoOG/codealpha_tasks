@@ -4,12 +4,13 @@ import { JWT_SECRET } from "$env/static/private"
 
 export const handle: Handle = async ({ event, resolve }) => {
   const access = event.cookies.get("accessToken");
-
+  
   if (access) {
     try {
-      const user = jwt.verify(access, JWT_SECRET!);
+      const user = jwt.decode(access);
       event.locals.user = user; // available in +page.server.ts
-    } catch {
+    } catch(err){
+	console.error(err)
       event.locals.user = null;
     }
   }
