@@ -1,12 +1,13 @@
 <script lang='ts'>
   let { data } = $props()
+  console.log(data)
 </script>
 
 <section class="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 p-6">
   <!-- Restaurant Header -->
   <div class="bg-white/80 backdrop-blur-md shadow-lg rounded-2xl p-6 mb-6">
     <div class="flex items-center gap-4">
-      <img src={data.restaurant.logo} alt={data.restaurant.name} class="w-20 h-20 rounded-xl object-cover" />
+      <img src={data.restaurant.image} alt={data.restaurant.name} class="w-20 h-20 rounded-xl object-cover" />
       <div>
         <h1 class="text-2xl font-bold text-orange-600">{data.restaurant.name}</h1>
         <p class="text-sm text-gray-500">{data.restaurant.cuisine}</p>

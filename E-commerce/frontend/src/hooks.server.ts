@@ -9,8 +9,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     try {
       const user = jwt.decode(access);
       event.locals.user = user; // available in +page.server.ts
+	    console.log(user)
     } catch(err){
-	console.error(err)
+	    console.error(err)
       event.locals.user = null;
     }
   }

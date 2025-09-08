@@ -1,5 +1,9 @@
 <script lang='ts'>
+	import RestaurantCard from "$lib/components/restaurants/restaurantCard.svelte";
+	import { PUBLIC_BACKEND_URL } from "$env/static/public";
+	
     let { data } = $props()
+	//console.log(data.restaurants)
 </script>
 
 <section class="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 p-6">
@@ -23,18 +27,8 @@
   <!-- Restaurant grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {#each data.restaurants as restaurant}
-      <a
-        href={`/restaurants/${restaurant.id}`}
-        class="bg-white/80 backdrop-blur-md shadow-lg rounded-2xl p-4 hover:shadow-xl transition"
-      >
-        <img src={restaurant.image} alt={restaurant.name} class="rounded-xl w-full h-40 object-cover mb-4" />
-        <h2 class="text-xl font-semibold text-orange-600">{restaurant.name}</h2>
-        <p class="text-sm text-gray-500">{restaurant.cuisine}</p>
-        <div class="flex justify-between mt-2 text-sm text-gray-600">
-          <span>⭐ {restaurant.rating}</span>
-          <span>{restaurant.deliveryTime} mins</span>
-        </div>
-      </a>
+		{@const url = PUBLIC_BACKEND_URL+restaurant.image}
+		<RestaurantCard {url} {restaurant}/>
     {/each}
   </div>
 </section>
