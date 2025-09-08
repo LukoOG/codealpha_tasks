@@ -1,13 +1,34 @@
 from .manager import User
 
 from django.db import models
-    
+from django.conf import settings
+   
+#Helper functions
+def restaurant_path(instance, filename):
+    return "restaurants/%s/%s" % (instance.name, filename)
+
 #Shops & Products
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="restaurants/", blank=True, null=True)
+    image = models.ImageField(upload_to=restaurant_path, blank=True, null=True)
+    banner = models.ImageField(default="/banner.jpeg", upload_to=restaurant_path, blank=True)
     description = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
+    
+    avg_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)  
+    review_count = models.PositiveIntegerField(default=0)  # quick display like "⭐ 4.5 (200)"
+
+    delivery_time = models.CharField(max_length=50, default="30-45 min")  # UX-friendly string
+    delivery_fee = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    
+    favorites = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="favorite_restaurants", blank=True
+    )
+
+    is_open = models.BooleanField(default=True)  
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
     def __str__(self):
         return f"{self.id} {self.name}"

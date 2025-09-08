@@ -1,5 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
+from django.contrib.staticfiles.storage import staticfiles_storage
+
 from .manager import User
 
 from rest_framework import serializers
@@ -28,3 +30,27 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'email', 'first_name', 'last_name', 'phone_number', 'shipping_address'
         ]
+
+class RestaurantSerializer(serializers.ModelSerializer):
+    is_favorite = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+    banner = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Restaurant
+        fields = [
+            "id", "name", "image", "banner", "description", "location",
+            "avg_rating", "review_count", "delivery_time", "delivery_fee",
+            "is_open", "is_favorite"
+        ]
+    
+    def get_is_favorite(self, obj):
+        user = self.context.get("request").user
+        if user.is_authenticated:
+            return obj.favorites.filter(id=user.id).exists()
+        return False
+    def get_image(self, obj):
+        return staticfiles_storage.url(obj.image.url) if obj.image else None
+    def get_banner(self, obj):
+        return staticfiles_storage.url(obj.banner.url) if obj.banner else None
+        
