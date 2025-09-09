@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { goto } from "$app/navigation"
+    import { goto } from "$app/navigation";
+	import { page } from "$app/state";
     
     let { user } = $props()
     let authenticated = $state<boolean>(false)
@@ -36,11 +37,29 @@
 
 <section class="nav-container">
     <nav class="nav-wrapper">
-        <p>Logo</p>
-        <div>
-            Svellit
-        </div>
-        {@render actions()}
+		<div class="max-w-7xl mx-auto flex items-center justify-between">
+		
+			<div class="text-2xl font-bold text-restaurant-primary cursor-pointer">
+				Svellit
+			</div>
+			
+			<div class="flex items-center gap-6">
+				{@render actions()}
+			</div>
+			<!---
+			<button
+            className={`px-4 py-2 rounded-md transition-colors relative ${
+              currentPage === 'cart' ? 'bg-restaurant-primary text-restaurant-primary-foreground' : 'text-foreground hover:text-restaurant-primary'
+            }`}
+            onClick={() => onNavigate('cart')}
+          >
+            Cart
+              <span>
+                4
+              </span>
+          </button>
+		  --->
+		</div>
     </nav>
 </section>
 
@@ -52,11 +71,9 @@
             background: blue;
             padding: 8px 16px;
             border-radius: 16px;
-            transition: ease-out 0.5s;
-        }
-
-        button:hover{
-            background: red;
+			&[aria-current="page"]{
+				
+			}
         }
     }
 </style>
