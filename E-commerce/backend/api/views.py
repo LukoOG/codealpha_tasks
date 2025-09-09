@@ -2,10 +2,10 @@
 from .models import Restaurant
 
 #rest_framework
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
-from .serializers import RestaurantSerializer
+from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantDetailSerializer
 
 #rest_framework simple jwts
 
@@ -19,6 +19,15 @@ def index(request):
     return Response(context)
 
 #Viewsets
+class RestaurantListView(generics.ListAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantListSerializer
+
+
+class RestaurantDetailView(generics.RetrieveAPIView):
+    queryset = Restaurant.objects.prefetch_related("categories__items")
+    serializer_class = RestaurantDetailSerializer
+    
 class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint for listing and retrieving restaurants

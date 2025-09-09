@@ -31,6 +31,20 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'email', 'first_name', 'last_name', 'phone_number', 'shipping_address'
         ]
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ["id", "name", "description", "price", "image", "available"]
+
+
+# Category serializer (with nested menu items)
+class CategorySerializer(serializers.ModelSerializer):
+    items = ProductSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ["id", "name", "items"]
+        
 class RestaurantSerializer(serializers.ModelSerializer):
     is_favorite = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
@@ -53,4 +67,17 @@ class RestaurantSerializer(serializers.ModelSerializer):
         return staticfiles_storage.url(obj.image.url) if obj.image else None
     def get_banner(self, obj):
         return staticfiles_storage.url(obj.banner.url) if obj.banner else None
-        
+      
+class RestaurantListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Restaurant
+        fields = ["id", "name", "image", "description", "avg_rating", "delivery_time"]
+
+
+class RestaurantDetailSerializer(serializers.ModelSerializer):
+    categories = CategorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Restaurant
+        fields = ["id", "name", "image", "description", "location", "avg_rating", "categories"]
+       
