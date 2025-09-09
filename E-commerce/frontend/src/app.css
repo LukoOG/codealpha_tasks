@@ -5,23 +5,23 @@
     --color-background: hsl(0 0% 100%);
     --color-foreground: hsl(222.2 84% 4.9%);
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --color-card: 0 0% 100%;
+    --color-card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --color-primary: 222.2 47.4% 11.2%;
-    --color-primary-foreground: 210 40% 98%;
+    --color-color-primary: 222.2 47.4% 11.2%;
+    --color-color-primary-foreground: 210 40% 98%;
 
-    --color-secondary: 210 40% 96.1%;
-    --color-secondary-foreground: 222.2 47.4% 11.2%;
+    --color-color-secondary: 210 40% 96.1%;
+    --color-color-secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --color-accent: hsl(210 40% 96.1%);
-    --color-accent-foreground: hsl(222.2 47.4% 11.2%);
+    --color-color-accent: hsl(210 40% 96.1%);
+    --color-color-accent-foreground: hsl(222.2 47.4% 11.2%);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -38,7 +38,7 @@
     --color-restaurant-secondary: hsl(45 93% 47%);
     --color-restaurant-accent: hsl(35 100% 66%);
 
-    --color-sidebar-background: hsl(0 0% 98%;)
+    --color-sidebar-background: hsl(0 0% 98%);
 
     --color-sidebar-foreground: hsl(240 5.3% 26.1%);
 
@@ -103,12 +103,8 @@
     @apply bg-background text-foreground;
   }
     /* Navbar styling */
-    .nav-container{
-        @apply h-[calc(7rem)] backdrop-blur-2xl bg-transparent rounded-b-lg 
-        shadow-md top-0 relative w-[95%] mx-auto p-4 mt-1
-    }
 
     .nav-wrapper{
-        @apply flex flex-row flex-1 p-2 h-full items-center justify-around
+        @apply bg-card border-b border-border px-6 py-4
     }
 }

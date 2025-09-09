@@ -7,9 +7,8 @@
 </script>
 
 <div>
-    <section class="">
+    
         <Navbar { user } />
-    </section>
 	
     <section class="min-h-screen bg-background">
 		<!-- Hero Section -->

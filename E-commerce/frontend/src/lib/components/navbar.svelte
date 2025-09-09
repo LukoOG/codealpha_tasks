@@ -35,45 +35,35 @@
     </div>
 {/snippet}
 
-<section class="nav-container">
-    <nav class="nav-wrapper">
-		<div class="max-w-7xl mx-auto flex items-center justify-between">
-		
-			<div class="text-2xl font-bold text-restaurant-primary cursor-pointer">
-				Svellit
-			</div>
-			
-			<div class="flex items-center gap-6">
-				{@render actions()}
-			</div>
-			<!---
-			<button
-            className={`px-4 py-2 rounded-md transition-colors relative ${
-              currentPage === 'cart' ? 'bg-restaurant-primary text-restaurant-primary-foreground' : 'text-foreground hover:text-restaurant-primary'
-            }`}
-            onClick={() => onNavigate('cart')}
-          >
-            Cart
-              <span>
-                4
-              </span>
-          </button>
-		  --->
+<nav class="nav-wrapper">
+	<div class="max-w-7xl mx-auto flex items-center justify-between">
+		<div class="text-2xl font-bold text-restaurant-primary cursor-pointer">
+			Svellit
 		</div>
-    </nav>
-</section>
+		
+		<button aria-current="page" class="" onclick={() => goto('')}>
+            Home
+         </button>
+		
+		<div class="flex items-center gap-6">
+			{@render actions()}
+		</div>
+	</div>
+ </nav>
 
 <style>
-    .actions{
-        justify-content: space-between;
-
-        button{
-            background: blue;
-            padding: 8px 16px;
-            border-radius: 16px;
-			&[aria-current="page"]{
-				
-			}
-        }
-    }
+	button{
+		color: var(--color-foreground);
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+		border-radius: 0.375rem;
+		&[aria-current="page"]{
+			color: var(--color-restaurant-primary-foreground);
+			background: var(--color-restaurant-primary);
+		}
+		
+		:not(&[aria-current="page"]):hover{
+			color: var(--color-restaurant-primary);
+		}
+	}
 </style>
