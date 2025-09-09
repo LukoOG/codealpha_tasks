@@ -41,7 +41,7 @@
 			Svellit
 		</div>
 		
-		<button aria-current="page" class="" onclick={() => goto('')}>
+		<button aria-current="page" class="" onclick={() => goto('/')}>
             Home
          </button>
 		
@@ -62,7 +62,7 @@
 			background: var(--color-restaurant-primary);
 		}
 		
-		:not(&[aria-current="page"]):hover{
+		&:not([aria-current="page"]):hover{
 			color: var(--color-restaurant-primary);
 		}
 	}

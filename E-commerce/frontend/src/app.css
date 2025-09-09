@@ -11,22 +11,22 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --color-color-primary: 222.2 47.4% 11.2%;
-    --color-color-primary-foreground: 210 40% 98%;
+    --color-primary: 222.2 47.4% 11.2%;
+    --color-primary-foreground: 210 40% 98%;
 
-    --color-color-secondary: 210 40% 96.1%;
-    --color-color-secondary-foreground: 222.2 47.4% 11.2%;
+    --color-secondary: 210 40% 96.1%;
+    --color-secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --color-color-accent: hsl(210 40% 96.1%);
-    --color-color-accent-foreground: hsl(222.2 47.4% 11.2%);
+    --color-accent: hsl(210 40% 96.1%);
+    --color-accent-foreground: hsl(222.2 47.4% 11.2%);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --color-border: 214.3 31.8% 91.4%;
+    --color-border: hsl(214.3 31.8% 91.4%);
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
@@ -48,7 +48,7 @@
 
     --color-sidebar-accent: hsl(240 4.8% 95.9%);
 
-    --scolor-idebar-accent-foreground: hsl(240 5.9% 10%);
+    --color-idebar-accent-foreground: hsl(240 5.9% 10%);
 
     --color-sidebar-border: hsl(220 13% 91%);
 
