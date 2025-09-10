@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
 ]
@@ -44,7 +45,7 @@ MIDDLEWARE = [
 ]
 
 #which urls can access the backend
-CORS_ALLOWED_ORIGINS = ("localhost:5173",)
+CORS_ALLOWED_ORIGINS = ("http://localhost:5173",)
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'backend.urls'

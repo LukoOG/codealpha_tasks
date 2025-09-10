@@ -74,10 +74,10 @@ class RestaurantListSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "image", "description", "avg_rating", "delivery_time", "delivery_fee"]
 
 
-class RestaurantDetailSerializer(serializers.ModelSerializer):
+class RestaurantProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Restaurant
-        fields = ["id", "name", "image", "description", "location", "avg_rating", "delivery_time", "delivery_fee" "categories"]
+        fields = ["categories"]
        

@@ -5,7 +5,7 @@ from .models import Restaurant
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
-from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantDetailSerializer
+from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantProductSerializer
 
 #rest_framework simple jwts
 
@@ -26,7 +26,7 @@ class RestaurantListView(generics.ListAPIView):
 
 class RestaurantDetailView(generics.RetrieveAPIView):
     queryset = Restaurant.objects.prefetch_related("categories__items")
-    serializer_class = RestaurantDetailSerializer
+    serializer_class = RestaurantProductSerializer
     
 class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     """
