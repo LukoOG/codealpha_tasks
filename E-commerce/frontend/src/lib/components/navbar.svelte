@@ -13,6 +13,8 @@
         const param = new URLSearchParams({form_state: query})
         return goto(`auth?${param.toString()}`)
     }
+	
+	console.log(page)
 
     // test
     const logout = async () =>{
@@ -41,8 +43,12 @@
 			Svellit
 		</div>
 		
-		<button aria-current="page" class="" onclick={() => goto('/')}>
+		<button aria-current={page.url.pathname === '/' ? "page" : ""} class="" onclick={() => goto('/')}>
             Home
+         </button>
+		 
+		 <button aria-current={page.url.pathname === '/restaurants' ? "page" : ""} class="" onclick={() => goto('/restaurants')}>
+            Restaurants
          </button>
 		
 		<div class="flex items-center gap-6">
