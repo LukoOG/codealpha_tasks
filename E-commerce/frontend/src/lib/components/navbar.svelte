@@ -14,7 +14,6 @@
         return goto(`auth?${param.toString()}`)
     }
 	
-	console.log(page)
 
     // test
     const logout = async () =>{
@@ -28,10 +27,11 @@
 
 {#snippet actions()}
     <div class='actions'>
-        {#if !authenticated}
+        {#if authenticated}
             <button onclick={()=>{updateSearchParams("login")}}>Login</button>
             <button onclick={()=>{updateSearchParams("register")}}>Register</button>
-        {:else if authenticated}
+        {:else if !authenticated}
+			<button aria-current={page.url.pathname === '/cart' ? "page" : ""} onclick={()=>goto('/cart')}>Cart</button>
             <button onclick={logout}>Logout</button>
         {/if}
     </div>
@@ -43,15 +43,16 @@
 			Svellit
 		</div>
 		
-		<button aria-current={page.url.pathname === '/' ? "page" : ""} class="" onclick={() => goto('/')}>
-            Home
-         </button>
-		 
-		 <button aria-current={page.url.pathname === '/restaurants' ? "page" : ""} class="" onclick={() => goto('/restaurants')}>
-            Restaurants
-         </button>
+
 		
 		<div class="flex items-center gap-6">
+			<button aria-current={page.url.pathname === '/' ? "page" : ""} class="" onclick={() => goto('/')}>
+				Home
+			 </button>
+			 
+			 <button aria-current={page.url.pathname === '/restaurants' ? "page" : ""} class="" onclick={() => goto('/restaurants')}>
+				Restaurants
+			 </button>
 			{@render actions()}
 		</div>
 	</div>

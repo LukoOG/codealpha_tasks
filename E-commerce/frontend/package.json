@@ -43,6 +43,7 @@
 		"vitest-browser-svelte": "^0.1.0"
 	},
 	"dependencies": {
+		"gsap": "^3.13.0",
 		"jsonwebtoken": "^9.0.2"
 	}
 }
