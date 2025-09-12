@@ -46,11 +46,17 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ["id", "name", "items"]
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False, read_only=True)
+    product_name = serializers.CharField(source="product.name", read_only=True)
+    product_price = serializers.DecimalField(source="product.price", max_digits=10, decimal_places=2, read_only=True)
+    total_price = serializers.SerializerMethodField()
+    #product = ProductSerializer(many=False, read_only=True)
     
     class Meta:
         model = CartItem
-        fields = ["quantity", "product"]
+        fields = ["id", "product", "product_name", "product_price", "quantity", "total_price"]
+    
+    def get_total_price(self, obj):
+        return obj.quantity * obj.product.price
 
 class RestaurantSerializer(serializers.ModelSerializer):
     is_favorite = serializers.SerializerMethodField()
@@ -91,6 +97,7 @@ class RestaurantProductSerializer(serializers.ModelSerializer):
        
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True, read_only=True)
+    restaurant_name = serializers.CharField(source="restaurant.name", read_only=True)
     class Meta:
         model = Cart
-        fields = ["status", "items", "created_at", "total_price", "updated_at"]
+        fields = ["restaurant", "restaurant_name", "status", "items", "created_at", "updated_at"]
