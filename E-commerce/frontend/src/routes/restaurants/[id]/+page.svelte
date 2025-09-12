@@ -85,7 +85,7 @@
 			/>
 		</div>
         
-        <button onclick={()=>goto("/restaurants")} class="absolute top-4 left-4 bg-background/80 text-foreground p-2 rounded-full hover:bg-background transition-colors">
+        <button onclick={()=>goto("/restaurants")} class="absolute cursor-pointer top-4 left-4 bg-background/80 text-foreground p-2 rounded-full hover:bg-background transition-colors">
           ← Back
         </button>
         

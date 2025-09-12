@@ -12,8 +12,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	    console.log(user)
     } catch(err){
 	    console.error(err)
-      event.locals.user = null;
+		event.locals.user = null;
     }
+  }else{
+	  event.locals.user = null;
   }
 
   return resolve(event);

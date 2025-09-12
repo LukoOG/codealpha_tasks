@@ -8,7 +8,7 @@
 	
 	
     let user = page.data.user
-	let auth = $derived.by(()=>{
+	let authPage = $derived.by(()=>{
 		if(page.route.id === "/auth"){
 			return true
 		} else {
@@ -23,7 +23,7 @@
 </svelte:head>
 
 {#snippet renderNavbar()}
-	{#if !auth}
+	{#if !authPage}
 		<Navbar { user } />
 	{/if}
 {/snippet}

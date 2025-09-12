@@ -1,35 +1,81 @@
 <script lang="ts">
-    let { data } = $props()
+import { page } from "$app/state";
+
+	let { cart, user } = page
+	
+	console.log(user)
 </script>
 
-<section class="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 p-6">
-  <h1 class="text-2xl font-bold text-orange-600 mb-6">Your Cart</h1>
+{#if !cart}
+	<div class="min-h-screen bg-background flex items-center justify-center">
+		<div class="text-center">
+			<h1 class="text-3xl font-bold text-foreground mb-4">Your Cart is Empty</h1>
+			<p class="text-muted-foreground">Add some delicious items to get started!</p>
+		</div>
+	</div>
+{:else}
+	<section class="min-h-screen bg-background px-6 py-8">
+		<div class="max-w-4xl mx-auto">
+			<h1 class="text-4xl font-bold text-center mb-8 text-foreground">
+				Your Cart
+			</h1>
 
-  <div class="space-y-4">
-    {#each data.cart as item}
-      <div class="bg-white/80 backdrop-blur-md shadow rounded-xl p-4 flex justify-between items-center">
-        <div>
-          <h3 class="font-medium">{item.name}</h3>
-          <p class="text-sm text-gray-500">${item.price} × {item.quantity}</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="px-2 bg-orange-200 rounded">-</button>
-          <span>{item.quantity}</span>
-          <button class="px-2 bg-orange-200 rounded">+</button>
-        </div>
-      </div>
-    {/each}
-  </div>
+			<div bind:this={containerRef} class="space-y-4 mb-8">
+				{#each cart as item (item.id)}
+					<div class="cart-item bg-card rounded-lg p-6 border border-border flex items-center gap-4">
+						<img src={item.image} alt={item.name} class="w-20 h-20 object-cover rounded-md"/>
 
-  <div class="mt-8 bg-white/80 backdrop-blur-md shadow rounded-xl p-6">
-    <div class="flex justify-between mb-2">
-      <span>Subtotal</span><span>$24.50</span>
-    </div>
-    <div class="flex justify-between font-bold text-orange-600">
-      <span>Total</span><span>$28.50</span>
-    </div>
-    <button class="w-full bg-orange-500 text-white py-3 rounded-xl mt-4 hover:bg-orange-600">
-      Checkout
-    </button>
-  </div>
-</section>
+						<div class="flex-1">
+							<h3 class="text-lg font-semibold text-card-foreground">{item.name}</h3>
+							<p class="text-muted-foreground text-sm">{item.description}</p>
+							<p class="text-restaurant-primary font-bold">${item.price}</p>
+						</div>
+
+						<div class="flex items-center gap-3">
+							<button 
+								class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-secondary/80" 
+								onclick={() => handleQuantityChange(item.id, item.quantity - 1)}
+							>
+							-
+							</button>
+							
+							<span class="w-8 text-center font-medium text-card-foreground">
+								{item.quantity}
+							</span>
+							
+							<button
+								class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-secondary/80"
+								onclick={() => handleQuantityChange(item.id, item.quantity + 1)}
+							>
+							+
+							</button>
+						</div>
+
+						<button class="text-destructive hover:text-destructive/80 ml-4" onclick={(e) => handleRemoveItem(item.id, e)}>
+							Remove
+						</button>
+					</div>
+				{/each}
+			</div>
+
+			<!-- Total and Checkout -->
+			<div class="bg-card rounded-lg p-6 border border-border">
+				<div class="flex justify-between items-center mb-4">
+					<span class="text-xl font-semibold text-card-foreground">Total:</span>
+					<span class="text-2xl font-bold text-restaurant-primary">
+						${getTotalPrice().toFixed(2)}
+					</span>
+					</div>
+
+					<div class="flex gap-4">
+					<button class="flex-1 bg-secondary text-secondary-foreground py-3 rounded-md hover:bg-secondary/80 transition-colors" onclick={clearCart}>
+						Clear Cart
+					</button>
+					<button class="flex-1 bg-restaurant-primary text-restaurant-primary-foreground py-3 rounded-md hover:bg-restaurant-primary/90 transition-colors">
+						Checkout
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+{/if}

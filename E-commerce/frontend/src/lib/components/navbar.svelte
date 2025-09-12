@@ -27,10 +27,10 @@
 
 {#snippet actions()}
     <div class='actions'>
-        {#if authenticated}
+        {#if !authenticated}
             <button onclick={()=>{updateSearchParams("login")}}>Login</button>
             <button onclick={()=>{updateSearchParams("register")}}>Register</button>
-        {:else if !authenticated}
+        {:else if authenticated}
 			<button aria-current={page.url.pathname === '/cart' ? "page" : ""} onclick={()=>goto('/cart')}>Cart</button>
             <button onclick={logout}>Logout</button>
         {/if}

@@ -3,6 +3,4 @@
 </script>
 
 
-<section class='p-4'>
-    {@render children?.()}
-</section>
+{@render children?.()}
