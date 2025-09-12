@@ -57,8 +57,8 @@ class CartViewSet(viewsets.ViewSet):
         """the current user's Cart, not a list of all Carts"""
         user = User.objects.get(email=self.request.user)
         try:
-            cart = Cart.objects.get(user=user)
-            serializer = CartSerializer(cart)
+            cart = Cart.objects.filter(user=user)
+            serializer = CartSerializer(cart, many=True)
         except Cart.DoesNotExist:
             return Response({"detail": "No active Cart found"}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
