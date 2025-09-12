@@ -5,7 +5,7 @@ export default async function refreshAccessToken(event: any) {
   if (!refresh) return null;
 
   try {
-    const res = await fetch(`${PUBLIC_BACKEND_URL}/auth/token/refresh/`, {
+    const res = await fetch(`${PUBLIC_BACKEND_URL}/api/auth/token/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh })

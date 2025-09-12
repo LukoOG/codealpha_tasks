@@ -25,6 +25,5 @@ export const load = async ({cookies, fetch, parent}) => {
 	}catch(error){
 		console.error(error)
 	}
-	console.log(cart)
 	return { cart }
 }
