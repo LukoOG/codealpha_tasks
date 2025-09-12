@@ -4,7 +4,7 @@
 	let { url, restaurant } = $props()
 </script>
 
-<div onclick={()=>goto(`restaurants/${restaurant.id}`)} class="bg-card rounded-lg overflow-hidden border border-border cursor-pointer transition-all hover:shadow-lg">
+<div onkeydown={undefined} onclick={()=>goto(`restaurants/${restaurant.id}`)} class="bg-card rounded-lg overflow-hidden border border-border cursor-pointer transition-all hover:shadow-lg">
 	<div class="aspect-video overflow-hidden">
 		<img
 		  src={url}
@@ -33,8 +33,8 @@
 			
 		</div>
 
-		<div className="mt-2">
-			<span className="inline-block bg-secondary text-secondary-foreground px-2 py-1 rounded-full text-xs">
+		<div class="mt-2">
+			<span class="inline-block bg-secondary text-secondary-foreground px-2 py-1 rounded-full text-xs">
 				{restaurant.cuisine}
 			</span>
 		</div>
