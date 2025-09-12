@@ -44,7 +44,14 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ["id", "name", "items"]
-        
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(many=False, read_only=True)
+    
+    class Meta:
+        model = OrderItem
+        fields = ["quantity", "product"]
+
 class RestaurantSerializer(serializers.ModelSerializer):
     is_favorite = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
@@ -81,3 +88,9 @@ class RestaurantProductSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = ["categories"]
        
+       
+class CartSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True, read_only=True)
+    class Meta:
+        model = OrderItem
+        fields = ["restaurant", "status", "items", "created_at", "total_price", "updated_at"]

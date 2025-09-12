@@ -47,3 +47,79 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             restaurant.favorites.add(user.id)
             return Response({"is_false":False}, status=status.HTTP_200_OK)           
+            
+            
+class CartViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def list(self):
+        """the current user's cart, not a list of all carts"""
+        cart, created = Cart.objects.get_or_create(user=self.request.user, status="active")
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+        
+    def destroy(self, request, pk=None):
+        """Delete the user's active cart"""
+        try:
+            cart = Cart.objects.get(user=request.user, status="active")
+            cart.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Cart.DoesNotExist:
+            return Response({"detail": "No active cart found"}, status=status.HTTP_404_NOT_FOUND)
+            
+            
+class OrderItemViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def create(self, request):
+        product_id = request.data.get("product")
+        quantity = int(request.data.get("quantity", 1))
+        
+        if not product_id:
+            return Response({"detail": "Product ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+            
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response({"detail": "Invalid product"}, status=status.HTTP_404_NOT_FOUND)
+            
+            
+        cart, _ = Cart.objects.get_or_create(user=request.user, status="pending")
+        
+        if not cart.restaurant:
+            cart.restaurant = product.restaurant
+            cart.save()
+            
+        item, created = OrderItem.objects.get_or_create(cart=cart, product=product)
+        if created:
+            item.quantity = quantity
+        else:
+            item.quantity += quantity
+        item.save()
+        
+        serializer = OrderItemSerializer(item)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+    def update(self, request, pk=None):
+        try:
+            item = OrderItem.objects.get(pk=pk, cart__user=request.user)
+        except OrderItem.DoesNotExist:
+            return Response({"detail": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        quantity = int(request.data.get("quantity", 1))
+        if quantity <= 0:
+            item.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        item.quantity = quantity
+        item.save()
+        serializer = OrderItemSerializer(item)
+        return Response(serializer.data)
+        
+    def delete(self, request, pk=None):
+        try:
+            item = OrderItem.objects.get(pk=pk)
+        except item.DoesNotExist:
+            return Response({"detail": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+        item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
