@@ -1,12 +1,12 @@
 #
-from .models import Restaurant, Cart
+from .models import Restaurant, Cart, Product, CartItem
 from .auth import User
 
 #rest_framework
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
-from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantProductSerializer, CartSerializer
+from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantProductSerializer, CartSerializer, CartItemSerializer
 
 #rest_framework simple jwts
 
@@ -78,6 +78,7 @@ class CartItemViewSet(viewsets.ViewSet):
     
     def create(self, request):
         product_id = request.data.get("product")
+        #restaurant_id = request.data.get("restaurant")
         quantity = int(request.data.get("quantity", 1))
         
         if not product_id:
@@ -89,7 +90,7 @@ class CartItemViewSet(viewsets.ViewSet):
             return Response({"detail": "Invalid product"}, status=status.HTTP_404_NOT_FOUND)
             
             
-        cart, _ = Cart.objects.get_or_create(user=request.user, status="pending")
+        cart, _ = Cart.objects.get_or_create(user=request.user, restaurant=product.restaurant)
         
         if not cart.restaurant:
             cart.restaurant = product.restaurant
