@@ -30,7 +30,7 @@
 
 <!-- main html body -->
 <section class="min-h-screen flex items-center justify-center">
-  <div class="bg-white/80 backdrop-blur-md shadow-lg rounded-2xl p-8 w-full max-w-md bg-gradient-to-br from-orange-10 to-orange-50">
+  <div class="bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8 w-full max-w-md bg-gradient-to-br from-orange to-orange-50">
     <h2 class="text-3xl font-bold mb-6 text-center text-orange-600">{form_state ? form_state.slice(0, 1).toUpperCase() + form_state.slice(1) : ""}</h2>
 
     <form method="POST" action="?/{form_state}" class="space-y-4" use:enhance>
@@ -45,7 +45,9 @@
       {@render changeFormBtn(form_state)}
     </form>
     {#if form?.error}
-        <p>{ form.error.detail }</p>
+        <div class="rounded=sm border border-border absolute top-[-25%] right-[50%] bg-destructive h-fit min-w-20">
+			<p class="text-md font-semibold text-center text-destructive-foreground">{ form.detail.error }/p>
+		</div>
     {/if}
 
   </div>

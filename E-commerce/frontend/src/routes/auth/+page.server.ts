@@ -69,22 +69,6 @@ export const actions: Actions = {
             }
         )
 
-                // I have to manually set the cookies
-        const rawCookies = res.headers.get("set-cookie");
-		if(rawCookies){
-			const cookiesArray = parse(splitCookiesString(rawCookies));
-			for (const c of cookiesArray){
-				cookies.set(c.name, c.value, {
-					httpOnly: c.httpOnly ?? true,
-					secure: c.secure,
-					sameSite: (c.sameSite?.toLowerCase() as 'lax' | 'strict' | 'none') ?? 'lax',
-					path: c.path ?? "/",
-					...(c.maxAge ? { maxAge : c.maxAge} : {}),
-					...(c.expires ? { expires: new Date(c.expires) } : {}),
-				})
-			}
-		}
-
         if(!res.ok){
             const error = await res.json().catch(() => ({}));
             return fail(res.status, { error });
