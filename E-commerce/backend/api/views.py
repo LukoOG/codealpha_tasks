@@ -1,11 +1,12 @@
 #
-from .models import Restaurant
+from .models import Restaurant, Cart
+from .auth import User
 
 #rest_framework
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
-from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantProductSerializer
+from .serializers import RestaurantSerializer, RestaurantListSerializer, RestaurantProductSerializer, CartSerializer
 
 #rest_framework simple jwts
 
@@ -52,23 +53,27 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
 class CartViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
-    def list(self):
-        """the current user's cart, not a list of all carts"""
-        cart, created = Cart.objects.get_or_create(user=self.request.user, status="active")
-        serializer = CartSerializer(cart)
+    def list(self, request):
+        """the current user's Cart, not a list of all Carts"""
+        user = User.objects.get(email=self.request.user)
+        try:
+            cart = Cart.objects.get(user=user)
+            serializer = CartSerializer(cart)
+        except Cart.DoesNotExist:
+            return Response({"detail": "No active Cart found"}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
         
     def destroy(self, request, pk=None):
-        """Delete the user's active cart"""
+        """Delete the user's active Cart"""
         try:
-            cart = Cart.objects.get(user=request.user, status="active")
+            cart = Cart.objects.get(user=request.user)
             cart.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Cart.DoesNotExist:
-            return Response({"detail": "No active cart found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "No active Cart found"}, status=status.HTTP_404_NOT_FOUND)
             
             
-class OrderItemViewSet(viewsets.ViewSet):
+class CartItemViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
     def create(self, request):
@@ -90,20 +95,20 @@ class OrderItemViewSet(viewsets.ViewSet):
             cart.restaurant = product.restaurant
             cart.save()
             
-        item, created = OrderItem.objects.get_or_create(cart=cart, product=product)
+        item, created = CartItem.objects.get_or_create(cart=cart, product=product)
         if created:
             item.quantity = quantity
         else:
             item.quantity += quantity
         item.save()
         
-        serializer = OrderItemSerializer(item)
+        serializer = CartItemSerializer(item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         
     def update(self, request, pk=None):
         try:
-            item = OrderItem.objects.get(pk=pk, cart__user=request.user)
-        except OrderItem.DoesNotExist:
+            item = CartItem.objects.get(pk=pk, cart__user=request.user)
+        except Item.DoesNotExist:
             return Response({"detail": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         quantity = int(request.data.get("quantity", 1))
@@ -113,12 +118,12 @@ class OrderItemViewSet(viewsets.ViewSet):
 
         item.quantity = quantity
         item.save()
-        serializer = OrderItemSerializer(item)
+        serializer = CartItemSerializer(item)
         return Response(serializer.data)
         
     def delete(self, request, pk=None):
         try:
-            item = OrderItem.objects.get(pk=pk)
+            item = CartItem.objects.get(pk=pk)
         except item.DoesNotExist:
             return Response({"detail": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
         item.delete()

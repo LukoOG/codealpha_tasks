@@ -38,7 +38,6 @@ class LoginTokenObtainPairView(TokenObtainPairView):
             data = response.data
             access = data.get("access")
             refresh = data.get("refresh")
-            print(access)
 
             # Set cookies
             response.set_cookie(
@@ -74,7 +73,8 @@ class CustomTokenRefreshView(TokenRefreshView):
         except Exception:
             return Response({"detail": "Invalid refresh token"}, status=status.HTTP_401_UNAUTHORIZED)
         
-        response = Response({"success": True})
+        response = Response({"success": True, "access":access})
+        """
         response.set_cookie(
             key="accessToken",
             value=access,
@@ -83,6 +83,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             samesite="Lax",
             max_age=60 * 15,
         )
+        """
         return response
     
 class LogoutView(APIView):

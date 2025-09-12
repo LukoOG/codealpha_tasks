@@ -60,15 +60,15 @@ class Product(models.Model):
         
 
 #Organize cart of orders on frontend
-class Order(models.Model):
+class Cart(models.Model):
     class Status(models.TextChoices):
         PENDING = 'pending', 'Pending'
         PAID = 'paid', 'Paid'
         SHIPPED = 'shipped', 'Shipped'
         DELIVERED = 'delivered', 'Delivered'
         CANCELLED = 'cancelled', 'Cancelled'
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="orders")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carts")
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="carts")
     status = models.CharField(
         max_length=20,
         choices=Status,
@@ -80,13 +80,13 @@ class Order(models.Model):
     def __str__(self):
         return f"Order #{self.id} - {self.get_status_display()}"
 
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     
     def __str__(self):
-        return f"Order {self.order.id}: {self.quantity} x {self.product.name}"
+        return f"Order {self.cart.id}: {self.quantity} x {self.product.name}"
 
 # class OrderHistory(models.Model):
 

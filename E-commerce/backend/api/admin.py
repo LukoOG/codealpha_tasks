@@ -31,5 +31,5 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(Restaurant)
 admin.site.register(Product)
 admin.site.register(Category)
-admin.site.register(Order)
-admin.site.register(OrderItem)
+admin.site.register(Cart)
+admin.site.register(CartItem)

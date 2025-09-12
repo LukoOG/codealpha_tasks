@@ -45,11 +45,11 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ["id", "name", "items"]
 
-class OrderItemSerializer(serializers.ModelSerializer):
+class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(many=False, read_only=True)
     
     class Meta:
-        model = OrderItem
+        model = CartItem
         fields = ["quantity", "product"]
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -90,7 +90,7 @@ class RestaurantProductSerializer(serializers.ModelSerializer):
        
        
 class CartSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True, read_only=True)
+    items = CartItemSerializer(many=True, read_only=True)
     class Meta:
-        model = OrderItem
-        fields = ["restaurant", "status", "items", "created_at", "total_price", "updated_at"]
+        model = Cart
+        fields = ["status", "items", "created_at", "total_price", "updated_at"]
