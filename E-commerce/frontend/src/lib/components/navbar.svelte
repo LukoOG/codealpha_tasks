@@ -23,7 +23,12 @@
             <button onclick={()=>{updateSearchParams("login")}}>Login</button>
             <button onclick={()=>{updateSearchParams("register")}}>Register</button>
         {:else if authenticated}
-			<button aria-current={page.url.pathname === '/cart' ? "page" : ""} onclick={()=>goto('/cart')}>Cart</button>
+			<button class="px-4 py-2 rounded-md transition-colors relative" aria-current={page.url.pathname === '/cart' ? "page" : ""} onclick={()=>goto('/cart')}>
+				Cart
+				<span class="absolute -top-2 -right-2 bg-restaurant-accent text-restaurant-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                6
+              </span>
+			</button>
             <button onclick={logout}>Logout</button>
         {/if}
     </div>

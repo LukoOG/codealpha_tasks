@@ -27,3 +27,7 @@ export const load = async ({cookies, fetch, parent}) => {
 	}
 	return { cart }
 }
+
+export const actions: Actions = {
+	
+}

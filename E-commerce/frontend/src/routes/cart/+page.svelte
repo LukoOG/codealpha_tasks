@@ -3,9 +3,9 @@
 	import { PUBLIC_BACKEND_URL } from "$env/static/public"
 	
 	let { cart, user } = page.data
+	console.log(cart[0].items)
 	
-	let containerRef;
-	console.log(!!cart)
+	let containerRef = $state();
 	
 	let cartItems = $state<[]>([])
 	for(const c of cart){
@@ -13,9 +13,38 @@
 			cartItems.push(i)
 		}
 	}
-	$inspect(cartItems[0])
+	//$inspect(cartItems)
+	
+	const getTotalPrice = () => {
+		return cartItems.reduce((t, curr)=>t + curr.total_price, 0)
+	}
+	
+	const handleQuantityChange = (id:number, amount:number) => {
+		cartItems = cartItems.map((item)=>{
+			if(item.id === id){
+				item.quantity = amount
+			}
+			return item
+		}).filter((item)=>item.quantity > 0)
+		/*
+		cartItems = cartItems.map((item)=>{
+			if(item.id === id && amount > 0){
+				item.quantity = amount
+			}
+			return item
+		}).filter((item)=>item.quantity > 0)
+		*/
+	}
+	
+	const handleRemoveItem = (id:number, e: Event) => {
+		cartItems = cartItems.filter((item)=>item.id != id)
+	}
+	
+	const clearCart = () => {
+		cartItems = []
+	}
 </script>
-{#if cart.length <= 0}
+{#if cartItems.length <= 0}
 	<div class="min-h-screen bg-background flex items-center justify-center">
 		<div class="text-center">
 			<h1 class="text-3xl font-bold text-foreground mb-4">Your Cart is Empty</h1>
@@ -38,7 +67,7 @@
 							<div class="flex-1">
 								<h3 class="text-lg font-semibold text-card-foreground">{item.product.name}</h3>
 								<p class="text-muted-foreground text-sm">{item.product.description}</p>
-								<p class="text-restaurant-primary font-bold">${item.product.price}</p>
+								<p class="text-restaurant-primary font-bold">${item.total_price}</p>
 							</div>
 
 							<div class="flex items-center gap-3">
@@ -73,15 +102,15 @@
 				<div class="flex justify-between items-center mb-4">
 					<span class="text-xl font-semibold text-card-foreground">Total:</span>
 					<span class="text-2xl font-bold text-restaurant-primary">
-						$34<!--${getTotalPrice().toFixed(2)}-->
+						${getTotalPrice().toFixed(2)}
 					</span>
 					</div>
 
 					<div class="flex gap-4">
-					<button class="flex-1 bg-secondary text-secondary-foreground py-3 rounded-md hover:bg-secondary/80 transition-colors" onclick={clearCart}>
+					<button class="cursor-pointer flex-1 bg-secondary text-secondary-foreground py-3 rounded-md hover:bg-destructive/80 transition-colors" onclick={clearCart}>
 						Clear Cart
 					</button>
-					<button class="flex-1 bg-restaurant-primary text-restaurant-primary-foreground py-3 rounded-md hover:bg-restaurant-primary/90 transition-colors">
+					<button class="cursor-pointer flex-1 bg-restaurant-primary text-restaurant-primary-foreground py-3 rounded-md hover:bg-restaurant-primary/90 transition-colors">
 						Checkout
 					</button>
 				</div>

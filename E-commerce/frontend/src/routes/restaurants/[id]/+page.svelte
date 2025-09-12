@@ -4,6 +4,7 @@
 
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
+    import { enhance } from '$app/forms';
 	import { PUBLIC_BACKEND_URL } from "$env/static/public";
 	import gsap from "gsap";
 	
@@ -155,9 +156,12 @@
 									<span class="text-xl font-bold text-restaurant-primary">
 										${item.price}
 									</span>
-									<button class="bg-restaurant-primary text-restaurant-primary-foreground px-4 py-2 rounded-md hover:bg-restaurant-primary/90 transition-all">
-									Add to Cart
-									</button>
+									<form action="?/add" method="POST" class="display-none" use:enhance={()=>console.log("sending")}>
+										<input type="hidden" name="product" value={item.id} />
+										<button type="submit" class="cursor-pointer bg-restaurant-primary text-restaurant-primary-foreground px-4 py-2 rounded-md hover:bg-restaurant-primary/90 transition-all">
+										Add to Cart
+										</button>
+									</form>
 								</div>
 								
 							</div>

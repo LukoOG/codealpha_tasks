@@ -1,4 +1,4 @@
-import type { restaurantData } from "$lib/types.ts"
+import type { restaurantData, cartData } from "$lib/types.ts"
 
 class RestaurantsCache{
 	#cache = $state<{ [id:number]:restaurantData }>({})
@@ -24,3 +24,14 @@ class RestaurantsCache{
 }
 
 export const restaurantsCache = new RestaurantsCache()
+
+class CartCache{
+	#cache = $state<cartData>([])
+	constructor(){}
+	
+	clearCache(){
+		this.cache = []
+	}	
+}
+
+export const cartCache = new CartCache()
