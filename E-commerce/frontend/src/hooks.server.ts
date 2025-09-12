@@ -2,20 +2,29 @@ import type { Handle } from "@sveltejs/kit";
 import jwt from "jsonwebtoken"; // or any JWT lib
 import { JWT_SECRET } from "$env/static/private"
 
-export const handle: Handle = async ({ event, resolve }) => {
-  const access = event.cookies.get("accessToken");
-  
-  if (access) {
-    try {
-      const user = jwt.decode(access);
-      event.locals.user = user; // available in +page.server.ts
-    } catch(err){
-	    console.error(err)
-		event.locals.user = null;
-    }
-  }else{
-	  event.locals.user = null;
-  }
+import refreshAccessToken from "$lib/helpers/refreshAccessToken.ts"
 
-  return resolve(event);
+export const handle: Handle = async ({ event, resolve }) => {
+	let access = event.cookies.get("accessToken");
+	
+	if(access){
+		try{
+			const user = jwt.decode(access);
+			event.locals.user = user;			
+		}catch(error){
+			console.warn("Access expired, attempting refresh...");
+			access = await refreshAccessToken(event);
+			
+			if (access) {
+				const user = jwt.decode(access);
+				event.locals.user = user;
+			} else {
+				event.locals.user = null;
+			}
+		}
+	} else {
+		access = await refreshAccessToken(event);
+		event.locals.user = access ? jwt.decode(access) : null;
+	}
+	return resolve(event);
 };

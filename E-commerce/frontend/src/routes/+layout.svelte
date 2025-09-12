@@ -7,7 +7,7 @@
 	let { children } = $props();
 	
 	
-    let user = page.data.user
+    let user = $derived(page.data.user)
 	let authPage = $derived.by(()=>{
 		if(page.route.id === "/auth"){
 			return true

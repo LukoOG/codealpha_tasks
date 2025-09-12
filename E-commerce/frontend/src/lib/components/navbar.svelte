@@ -1,6 +1,8 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
 	import { page } from "$app/state";
+	
+	import { logout } from "$lib/helpers/auth.ts"
     
     let { user } = $props()
     let authenticated = $state<boolean>(false)
@@ -12,16 +14,6 @@
     const updateSearchParams = (query: "login" | "register") => {
         const param = new URLSearchParams({form_state: query})
         return goto(`auth?${param.toString()}`)
-    }
-	
-
-    // test
-    const logout = async () =>{
-        const res = await fetch("http://127.0.0.1:8000/api/auth/logout", { method: "POST"})
-        if (res.ok){
-            return true
-        }
-        return false
     }
 </script>
 
