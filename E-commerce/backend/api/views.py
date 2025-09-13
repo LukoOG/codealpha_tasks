@@ -78,7 +78,6 @@ class CartItemViewSet(viewsets.ViewSet):
     
     def create(self, request):
         product_id = request.data.get("product")
-        #restaurant_id = request.data.get("restaurant")
         quantity = int(request.data.get("quantity", 1))
         
         if not product_id:
