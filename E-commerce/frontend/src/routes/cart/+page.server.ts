@@ -31,5 +31,22 @@ export const load = async ({cookies, fetch, parent}) => {
 }
 
 export const actions: Actions = {
-	
+	sync: async ({ request, cookies }) => {
+		const data = await request.formData()
+		const id = data.get("id")
+		console.log(id)
+		const quantity = data.get("quantity")
+		let res = await fetch(`${PUBLIC_BACKEND_URL}/api/cart-items/${id}/`,
+			{
+				method:"PUT",
+				headers: {
+					"Content-Type":"application/json",
+					"Authorization": `Bearer ${cookies.get("accessToken")}`
+				},
+				body:JSON.stringify({quantity})
+			}
+		)
+		
+		console.log(res)
+	}
 }

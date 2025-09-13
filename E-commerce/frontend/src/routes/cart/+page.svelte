@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
+	import { enhance } from "$app/forms"
 	import { PUBLIC_BACKEND_URL } from "$env/static/public"
 	import { cartItemsCount} from "$lib/global/cache.svelte.ts";
 	
@@ -24,6 +25,7 @@
 	const getTotalItems = () => {
 		return cartItems.reduce((t, curr)=>t + curr.quantity, 0)
 	}
+	
 	//accessible to navbar
 	cartItemsCount.change(getTotalItems())
 	
@@ -80,25 +82,33 @@
 							</div>
 
 							<div class="flex items-center gap-3">
-								<button 
-									class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-secondary/80" 
-									onclick={() => handleQuantityChange(item.id, item.quantity - 1)}
-								>
-								-
-								</button>
+								<form method="POST" action="?/sync" use:enhance>
+									<input class="hidden" name ="id" value={item.id}>
+									<input class="hidden" name ="quantity" value={item.quantity -1}>
+									<button 
+										class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-secondary/80" 
+										onclick={() => handleQuantityChange(item.id, item.quantity - 1)}
+									>
+									-
+									</button>
+								</form>
 								
 								<span class="w-8 text-center font-medium text-card-foreground">
 									{item.quantity}
 								</span>
 								
-								<button
-									class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-secondary/80"
-									onclick={() => handleQuantityChange(item.id, item.quantity + 1)}
-								>
-								+
-								</button>
+								<form method="POST" action="?/sync" use:enhance>
+									<input class="hidden" name ="id" value={item.id}>
+									<input class="hidden" name ="quantity" value={item.quantity +1}>
+									<button
+										class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-secondary/80"
+										onclick={() => handleQuantityChange(item.id, item.quantity + 1)}
+									>
+									+
+									</button>
+								</form>
 							</div>
-
+							
 							<button class="text-destructive hover:text-destructive/80 ml-4" onclick={(e) => handleRemoveItem(item.id, e)}>
 								Remove
 							</button>
