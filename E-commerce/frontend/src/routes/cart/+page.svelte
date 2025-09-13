@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { PUBLIC_BACKEND_URL } from "$env/static/public"
+	import { cartItemsCount} from "$lib/global/cache.svelte.ts";
 	
 	let { cart, user } = page.data
-	console.log(cart[0].items)
 	
-	let containerRef = $state();
+	
+	let containerRef = $state()
 	
 	let cartItems = $state<[]>([])
 	for(const c of cart){
@@ -13,11 +14,18 @@
 			cartItems.push(i)
 		}
 	}
-	//$inspect(cartItems)
+	//cartCache.create(cart)
+	//console.log(cart)
 	
 	const getTotalPrice = () => {
 		return cartItems.reduce((t, curr)=>t + curr.total_price, 0)
 	}
+	
+	const getTotalItems = () => {
+		return cartItems.reduce((t, curr)=>t + curr.quantity, 0)
+	}
+	//accessible to navbar
+	cartItemsCount.change(getTotalItems())
 	
 	const handleQuantityChange = (id:number, amount:number) => {
 		cartItems = cartItems.map((item)=>{
@@ -34,6 +42,7 @@
 			return item
 		}).filter((item)=>item.quantity > 0)
 		*/
+		cartItemsCount.change(getTotalItems())
 	}
 	
 	const handleRemoveItem = (id:number, e: Event) => {

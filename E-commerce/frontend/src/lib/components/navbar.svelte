@@ -3,6 +3,7 @@
 	import { page } from "$app/state";
 	
 	import { logout } from "$lib/helpers/auth.ts"
+	import { cartItemsCount} from "$lib/global/cache.svelte.ts";
     
     let { user } = $props()
     let authenticated = $state<boolean>(false)
@@ -15,6 +16,8 @@
         const param = new URLSearchParams({form_state: query})
         return goto(`auth?${param.toString()}`)
     }
+	
+	$inspect(cartItemsCount.value)
 </script>
 
 {#snippet actions()}
@@ -25,9 +28,11 @@
         {:else if authenticated}
 			<button class="px-4 py-2 rounded-md transition-colors relative" aria-current={page.url.pathname === '/cart' ? "page" : ""} onclick={()=>goto('/cart')}>
 				Cart
-				<span class="absolute -top-2 -right-2 bg-restaurant-accent text-restaurant-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                6
-              </span>
+				{#if cartItemsCount.value > 0}
+					<span class="absolute -top-2 -right-2 bg-restaurant-accent text-restaurant-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+						{ cartItemsCount.value  }
+					</span>
+				{/if}
 			</button>
             <button onclick={logout}>Logout</button>
         {/if}

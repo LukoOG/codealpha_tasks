@@ -2,6 +2,8 @@ import { PUBLIC_BACKEND_URL } from "$env/static/public";
 import { error, redirect } from '@sveltejs/kit';
 
 export const load = async ({cookies, fetch, parent}) => {
+	//can perform more complex caching operations here
+	//navbr count only updates once this page is visited
 	let cart = {}
 	const { user } = await parent()
 	if(!user){

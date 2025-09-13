@@ -25,13 +25,37 @@ class RestaurantsCache{
 
 export const restaurantsCache = new RestaurantsCache()
 
+//Primarily to be able to share state in order to retrieve itemcount in navbar
 class CartCache{
-	#cache = $state<cartData>([])
+	#cache = $state<cartData[]>([])
 	constructor(){}
+	
+	create(data:cartData){
+		this.cache = data
+	}
+	
+	
+	getItemCount(){
+		if(this.cache.length <= 0){
+			return 0
+		}
+		const total = this.cache.reduce((t, curr)=>{
+			const sumCurrItems = curr.items.reduce((t, innerCurr)=>t+innerCurr.quantity,0)
+			return sumCurrItems
+		}, 0)
+		return total
+	}
 	
 	clearCache(){
 		this.cache = []
 	}	
 }
 
-export const cartCache = new CartCache()
+//export let cartCache = new CartCache()
+
+export let cartItemsCount = $state({
+	value:0,
+	change(v){
+		this.value = v
+	}
+	})
