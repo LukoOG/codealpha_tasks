@@ -1,0 +1,105 @@
+<script lang="ts">
+	import { DropdownMenu } from "bits-ui";
+	import { MoreHorizontal, MessageCircle, Repeat2, Heart, Share } from "@lucide/svelte";
+	import { formatDistanceToNow } from "date-fns";
+	import Button from "$lib/components/ui/button.svelte";
+	
+	let { post } = $props()
+	
+	let isLiked = $state<boolean>(false)
+	let likesCount = $state<number>(45)
+	let repostsCount = $state<number>(2)
+	let isReposted = $state<boolean>(false)
+	
+	const handleReply = () => {}
+	const handleLike = () => {}
+	const handleComment = () => {}
+	const handleRepost = () => {}
+</script>
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none transition-colors hover:bg-muted/20">
+	<div class="p-4 p-6 pt-0">
+		<div class="flex space-x-3">
+			<div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full h-12 w-12">
+				{#if post.author.avatar}
+					<img class="aspect-square h-full w-full" src={post.author.avatar} />
+				{:else}
+					<div class="flex h-full w-full items-center justify-center rounded-full bg-muted">{post.author.name[0]}</div>
+				{/if}
+			</div>
+		  
+			<div class="flex-1 min-w-0">
+				<div class="flex items-center space-x-2">
+					<h3 class="font-bold text-foreground hover:underline cursor-pointer">
+						{post.author.name}
+					</h3>
+
+					<span class="text-muted-foreground">@{post.author.username}</span>
+					<span class="text-muted-foreground">·</span>
+					<span class="text-muted-foreground text-sm">
+						{formatDistanceToNow(post.createdAt, { addSuffix: true })}
+					</span>
+									  
+
+					<div class="ml-auto">
+					  <DropdownMenu.Root>
+						<DropdownMenu.Trigger>
+						  <Button variant="ghost" size="icon" class="h-8 w-8">
+							<MoreHorizontal class="h-4 w-4" />
+						  </Button>
+						</DropdownMenu.Trigger>
+
+						<DropdownMenu.Content align="end" class="z-50 min-w-[8rem] rounded-md border bg-popover p-1 shadow-md">
+						  <DropdownMenu.Item>
+							Follow @{post.author.username}
+						  </DropdownMenu.Item>
+						  <DropdownMenu.Item>
+							Mute @{post.author.username}
+						  </DropdownMenu.Item>
+						  <DropdownMenu.Item>
+							Block @{post.author.username}
+						  </DropdownMenu.Item>
+						</DropdownMenu.Content>
+					  </DropdownMenu.Root>
+					</div>
+					
+				</div>
+
+				<div class="mt-2 space-y-3">
+				  <p class="text-foreground whitespace-pre-wrap leading-relaxed">{post.content}</p>
+				  
+				  {#if post.image}
+					<div class="rounded-2xl overflow-hidden border border-border">
+					  <img src={post.image} 
+						alt="Post content" 
+						class="w-full h-auto object-cover transition-transform duration-200 hover:scale-[1.02]"
+					  />
+					</div>
+				  {/if}
+				</div>
+
+				<div class="flex items-center justify-between mt-4 max-w-md">
+					<Button variant="ghost" size="sm" class="text-muted-foreground hover:text-social-blue hover:bg-social-blue/10 transition-all duration-200">
+						<MessageCircle class="h-4 w-4 mr-1" />
+						<span class="text-sm">{post.repliesCount}</span>
+					</Button>
+
+					<Button variant={isReposted ? "repost-active" : "repost"} size="sm">
+						<Repeat2 class="h-4 w-4 mr-1" />
+						<span class="text-sm">{repostsCount}</span>
+					</Button>
+
+					<Button variant={isLiked ? "like-active" : "like"} size="sm">
+						<Heart class={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
+						<span class="text-sm">{likesCount}</span>
+					</Button>
+
+					<Button variant="ghost" size="sm" class="text-muted-foreground hover:text-social-blue hover:bg-social-blue/10 transition-all duration-200">
+						<Share class="h-4 w-4" />
+					</Button>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>

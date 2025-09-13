@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@theme {
+    --color-background: hsl(0 0% 100%);
+    --color-foreground: hsl(15 20% 7%);
+
+    --color-card: hsl(0 0% 100%);
+    --color-card-foreground: hsl(15 20% 7%);
+
+    --color-popover: hsl(0 0% 100%);
+    --color-popover-foreground: hsl(15 20% 7%);
+
+    --color-primary: hsl(203 89% 53%);
+    --color-primary-foreground: hsl(0 0% 100%);
+
+    --color-secondary: hsl(210 40% 96%);
+    --color-secondary-foreground: hsl(15 20% 7%);
+
+    --color-muted: hsl(220 13% 95%);
+    --color-muted-foreground: hsl(220 9% 46%);
+
+    --color-accent: hsl(220 13% 95%);
+    --color-accent-foreground: hsl(15 20% 7%);
+
+    --color-destructive: hsl(0 84% 60%);
+    --color-destructive-foreground: hsl(0 0% 100%);
+
+    --color-border: hsl(220 13% 91%);
+    --icolor-nput: hsl(220 13% 91%);
+    --color-ring: hsl(203 89% 53%);
+
+    --radius: 0.75rem;
+
+    /* Social Media Specific Tokens */
+    --color-social-blue: 203 89% 53%;
+    --color-social-blue-hover: 203 89% 48%;
+    --color-social-red: 0 84% 60%;
+    --color-social-red-hover: 0 84% 55%;
+    --color-social-green: 142 71% 45%;
+    --color-social-green-hover: 142 71% 40%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--social-blue)), hsl(var(--social-blue) / 0.8));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted) / 0.3));
+    
+    /* Shadows */
+    --shadow-post: 0 1px 3px 0 hsl(var(--foreground) / 0.1), 0 1px 2px 0 hsl(var(--foreground) / 0.06);
+    --shadow-modal: 0 25px 50px -12px hsl(var(--foreground) / 0.25);
+    --shadow-sidebar: 1px 0 3px 0 hsl(var(--border));
+    
+    /* Transitions */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --color-sidebar-background: hsl(0 0% 98%);
+
+    --color-sidebar-foreground: hsl(240 5.3% 26.1%);
+
+    --color-sidebar-primary: hsl(240 5.9% 10%);
+
+    --color-sidebar-primary-foreground: hsl(0 0% 98%);
+
+    --color-sidebar-accent: hsl(240 4.8% 95.9%);
+
+    --color-sidebar-accent-foreground: hsl(240 5.9% 10%);
+
+    --color-sidebar-border: hsl(220 13% 91%);
+
+    --color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+  }
+
+  .dark {
+    --background: 15 23% 4%;
+    --foreground: 210 40% 98%;
+
+    --card: 15 25% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 15 25% 6%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 203 89% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 203 89% 53%;
+
+    /* Dark mode social tokens */
+    --social-blue: 203 89% 53%;
+    --social-blue-hover: 203 89% 58%;
+    --social-red: 0 84% 60%;
+    --social-red-hover: 0 84% 65%;
+    --social-green: 142 71% 45%;
+    --social-green-hover: 142 71% 50%;
+    
+    --shadow-post: 0 1px 3px 0 hsl(0 0% 0% / 0.3), 0 1px 2px 0 hsl(0 0% 0% / 0.2);
+    --shadow-modal: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+    --shadow-sidebar: 1px 0 3px 0 hsl(var(--border));
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+@layer components{
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+	
+    /* Navbar styling */
+	
+}
