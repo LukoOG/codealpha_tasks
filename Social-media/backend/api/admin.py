@@ -9,15 +9,15 @@ from .models import *
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     # Fields to be used in displaying the User model.
-    list_display = ('email', 'first_name', 'last_name', 'phone_number', 'is_staff', 'is_active', 'date_joined')
+    list_display = ('email', 'first_name', 'last_name', 'username', 'phone_number', 'is_staff', 'is_active', 'date_joined')
     list_filter = ('is_staff', 'is_active', 'date_joined')
-    search_fields = ('email', 'first_name', 'last_name', 'phone_number')
+    search_fields = ('email', 'username', 'phone_number')
     ordering = ('-date_joined',)
 
     # Fieldsets for viewing/editing a user in admin
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'phone_number', 'follows')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'profile_pic', 'username', 'phone_number', 'follows')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login',)}),
     )
@@ -26,7 +26,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'phone_number', 'follows', 'password1', 'password2'),
+            'fields': ('email', 'first_name', 'last_name', 'username', 'phone_number', 'follows', 'password1', 'password2'),
         }),
     )
     

@@ -28,9 +28,12 @@ class UserManager(BaseUserManager):
     
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    display_name = models.CharField(max_length=40, blank=True, null=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    username = models.CharField(max_length=40, blank=True, null=True, unique=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True, unique=True)
     bio = models.TextField()
+    location = models.CharField(max_length=100, blank=True, null=True)
     profile_pic = models.ImageField(default="default.jpg", upload_to=user_directory_path)
     follows = models.ManyToManyField('self',
                                         symmetrical=False,
