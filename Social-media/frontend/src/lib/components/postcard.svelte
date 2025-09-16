@@ -22,7 +22,7 @@
 		<div class="flex space-x-3">
 			<div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full h-12 w-12">
 				{#if post.author.avatar}
-					<img class="aspect-square h-full w-full" src={post.author.avatar} />
+					<img class="aspect-square h-full w-full" src={post.author.avatar} alt={post.author} />
 				{:else}
 					<div class="flex h-full w-full items-center justify-center rounded-full bg-muted">{post.author.name[0]}</div>
 				{/if}
@@ -49,14 +49,14 @@
 						  </Button>
 						</DropdownMenu.Trigger>
 
-						<DropdownMenu.Content align="end" class="z-50 min-w-[8rem] rounded-md border bg-popover p-1 shadow-md">
-						  <DropdownMenu.Item>
+						<DropdownMenu.Content align="end" class="z-50 min-w-[8rem] rounded-md border bg-popover p-3 shadow-md">
+						  <DropdownMenu.Item class="rounded-button data-highlighted:bg-muted ring-0! ring-transparent! flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium focus-visible:outline-none">
 							Follow @{post.author.username}
 						  </DropdownMenu.Item>
-						  <DropdownMenu.Item>
+						  <DropdownMenu.Item class="rounded-button data-highlighted:bg-muted ring-0! ring-transparent! flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium focus-visible:outline-none">
 							Mute @{post.author.username}
 						  </DropdownMenu.Item>
-						  <DropdownMenu.Item>
+						  <DropdownMenu.Item class="rounded-button data-highlighted:bg-muted ring-0! ring-transparent! flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium focus-visible:outline-none">
 							Block @{post.author.username}
 						  </DropdownMenu.Item>
 						</DropdownMenu.Content>

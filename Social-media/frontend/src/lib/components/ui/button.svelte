@@ -49,5 +49,5 @@
 </script>
 
 <button {type} {disabled} class={ button({ variant, size, className }) }>
-  {@render children()}
+  <div>{@render children()}</div>
 </button>

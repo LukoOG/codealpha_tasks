@@ -7,15 +7,15 @@
 	
 	let navigationItems = [
 		{ title: "Home", url: "/", icon: House },
-		{ title: "Messages", url: "/profile", icon: Mail },
-		{ title: "Profile", url: "/messages", icon: User },
+		{ title: "Messages", url: "/messages", icon: Mail },
+		{ title: "Profile", url: "/profile", icon: User },
 	];
 	
 	function getNavCls(isActive: boolean) {
 		return isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
 	}
 	
-	console.log(page.url.pathname)
+	//console.log(page.url.pathname)
 </script>
 
 <!-- Sidebar container -->

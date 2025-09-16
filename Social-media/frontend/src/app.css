@@ -39,12 +39,12 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Social Media Specific Tokens */
-    --color-social-blue: 203 89% 53%;
-    --color-social-blue-hover: 203 89% 48%;
-    --color-social-red: 0 84% 60%;
-    --color-social-red-hover: 0 84% 55%;
-    --color-social-green: 142 71% 45%;
-    --color-social-green-hover: 142 71% 40%;
+    --color-social-blue: hsl(203 89% 53%);
+    --color-social-blue-hover: hsl(203 89% 48%);
+    --color-social-red: hsl(0 84% 60%);
+    --color-social-red-hover: hsl(0 84% 55%);
+    --color-social-green: hsl(142 71% 45%);
+    --color-social-green-hover: hsl(142 71% 40%);
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--social-blue)), hsl(var(--social-blue) / 0.8));
