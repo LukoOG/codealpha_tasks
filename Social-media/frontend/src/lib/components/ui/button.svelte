@@ -2,15 +2,15 @@
 	import { tv } from 'tailwind-variants';
 	import type { Snippet } from 'svelte';
 
-	type variant = "default" | "outline" | "secondary" | "ghost" | "link";
-	type size = "default" | "sm" | "lg" | "icon";
-	type type = "button" | "submit" | "reset";
+	type variantType = "default" | "outline" | "secondary" | "ghost" | "link";
+	type sizeType = "default" | "sm" | "lg" | "icon";
+	type buttonType = "button" | "submit" | "reset";
 	
 	interface buttonProps {
-		variant: string,
-		size: string,
+		variant: variantType,
+		size: sizeType,
 		className: string,
-		type: string,
+		type: buttonType,
 		disabled: boolean,
 		children: Snippet,
 	}
@@ -49,5 +49,5 @@
 </script>
 
 <button {type} {...others} {disabled} class={ button({ variant, size, className }) }>
-  <div>{@render children()}</div>
+	{@render children?.()}
 </button>

@@ -3,8 +3,7 @@
     import { goto } from "$app/navigation";
     import { enhance } from '$app/forms';
     import type { PageProps } from "./$types.js";
-	import { X, Eye, EyeOff } from "@lucide/svelte";
-	import { Label } from "bits-ui";
+	import { X } from "@lucide/svelte";
 	
 	import Button from "$lib/components/ui/button.svelte";
     import Login from "$lib/components/auth/login.svelte";
@@ -30,11 +29,11 @@
 {/snippet}
 
 <!-- main html body -->
-<div class="min-h-screen flex items-center justify-center bg-background px-4">
+<div class="min-h-screen w-full flex items-center justify-center bg-background px-4">
 	<div class="w-full max-w-md space-y-8">
 		<!-- Header -->
 		<div class="text-center">
-			<h1 class="text-3xl font-bold text-foreground">SocialApp</h1>
+			<h1 class="text-3xl font-bold text-foreground">Swix</h1>
 			<p class="mt-2 text-muted-foreground">
 				{isLogin ? "Welcome back" : "Join the conversation"}
 			</p>
@@ -44,20 +43,23 @@
 		<div class="bg-card border border-border rounded-lg p-6 shadow-sm">
 			<!-- Toggle Buttons -->
 			<div class="flex mb-6 p-1 bg-muted rounded-lg">
-				<Button variant={isLogin ? "default" : "ghost"} class="flex-1" onclick={() => {isLogin = !isLogin}}>
+				<Button variant={isLogin ? "default" : "ghost"} className="flex-1" onclick={() => {isLogin = !isLogin}}>
 					Sign In
 				</Button>
-				<Button variant={!isLogin ? "default" : "ghost"} class="flex-1" onclick={() => {isLogin = !isLogin}}>
+				<Button variant={!isLogin ? "default" : "ghost"} className="flex-1" onclick={() => {isLogin = !isLogin}}>
 					Sign Up
 				</Button>
 			</div>
 
 			<!-- Forms -->
-			{#if isLogin}
-				<Login />
-			{:else if !isLogin}
-				<Register />
-			{/if}
+			<form class="space-y-4">
+				{#if isLogin}
+					<Login />
+				{:else if !isLogin}
+					<Register />
+				{/if}
+			</form>
+			
 		</div>
 
 		<!-- Footer -->
