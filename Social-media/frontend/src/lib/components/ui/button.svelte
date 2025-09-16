@@ -21,7 +21,7 @@
 		type = "button",
 		className="",
 		disabled = false,
-		children
+		children, ...others
 	}: buttonProps = $props()
 
   const button = tv({
@@ -48,6 +48,6 @@
   });
 </script>
 
-<button {type} {disabled} class={ button({ variant, size, className }) }>
+<button {type} {...others} {disabled} class={ button({ variant, size, className }) }>
   <div>{@render children()}</div>
 </button>
