@@ -36,7 +36,7 @@
         <div class="flex items-start justify-between mb-4">
           <Avatar.Root class="h-24 w-24">
             <Avatar.Image class="aspect-square h-full w-full" src="/src/lib/assets/default.jpeg" />
-            <Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square h-full w-full text-2xl">{userData.name[0]}</Avatar.Fallback>
+            <Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square text-2xl">{userData.name[0]}</Avatar.Fallback>
           </Avatar.Root>
           
           <Button

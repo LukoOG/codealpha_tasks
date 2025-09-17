@@ -58,7 +58,7 @@ export const actions: Actions = {
         const password = data.get("password")
         
         const res = await fetch(
-            `${BACKEND_URL}/api/auth/register`,
+            `${PUBLIC_BACKEND_URL}/api/auth/register`,
             {
                 method: "POST",
                 headers: {

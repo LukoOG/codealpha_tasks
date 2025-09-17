@@ -8,13 +8,24 @@
 	import Button from "$lib/components/ui/button.svelte";
     import Login from "$lib/components/auth/login.svelte";
     import Register from "$lib/components/auth/register.svelte";
+	
+	type FormState = "login" | "register"
 
     let { form }: PageProps = $props()
 	
 	let isLogin = $state<boolean>(true)
-	$inspect(isLogin)
+	let formAction: FormState = $derived.by(()=>isLogin ? "login" : "register")
+	let disableSubmitBtn = $state<boolean>(false)
 	
-	let showPassword = $state(true)
+	const handleEnhance = () => {
+		disableSubmitBtn = true
+		
+		return async ({ update }) => {
+			await update()
+			disableSubmitBtn = false
+		}
+	}
+	
 </script>
 
 <!-- snippetss -->
@@ -43,20 +54,20 @@
 		<div class="bg-card border border-border rounded-lg p-6 shadow-sm">
 			<!-- Toggle Buttons -->
 			<div class="flex mb-6 p-1 bg-muted rounded-lg">
-				<Button variant={isLogin ? "default" : "ghost"} className="flex-1" onclick={() => {isLogin = !isLogin}}>
+				<Button variant={isLogin ? "default" : "ghost"} className="flex-1 cursor-pointer" onclick={() => {isLogin = true}}>
 					Sign In
 				</Button>
-				<Button variant={!isLogin ? "default" : "ghost"} className="flex-1" onclick={() => {isLogin = !isLogin}}>
+				<Button variant={!isLogin ? "default" : "ghost"} className="flex-1 cursor-pointer" onclick={() => {isLogin = false}}>
 					Sign Up
 				</Button>
 			</div>
 
 			<!-- Forms -->
-			<form class="space-y-4">
+			<form method="POST" class="space-y-4" action="?/{formAction}" use:enhance={handleEnhance}>
 				{#if isLogin}
-					<Login />
+					<Login disable={disableSubmitBtn} />
 				{:else if !isLogin}
-					<Register />
+					<Register disable={disableSubmitBtn} />
 				{/if}
 			</form>
 			

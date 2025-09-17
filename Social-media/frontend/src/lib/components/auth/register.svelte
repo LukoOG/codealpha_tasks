@@ -5,11 +5,13 @@
 	import { EyeOff, Eye, Check } from "@lucide/svelte";
 	
 	let { disable } = $props()
-	console.log(disable)
 	
-	let showPassword = $state<boolean>(true)
-	let showConfirmPassword = $state<boolean>(true)
-	let passwordMatch = $state<boolean>(true)
+	let showPassword1 = $state<boolean>(true)
+	let showPassword2 = $state<boolean>(true)
+	let passwordMatch = $state<boolean>(false)
+	let agreeToTerms = $state(false)
+	let disableSubmit = $derived(!agreeToTerms && !passwordMatch)
+	$inspect(disableSubmit)
 
 </script>
 
@@ -27,9 +29,13 @@
 <div class="space-y-2">
 	<Label.Root htmlFor="register-password">Password</Label.Root>
 	<div class="relative">
-		<Input id="register-password" type={showPassword ? "text" : "password"} placeholder="Create a password" required/>
-		<button type="button" onClick={() => setShowPassword(!showPassword)} class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-			<EyeOff size={16}  /> 
+		<Input id="register-password" type={showPassword1 ? "text" : "password"} placeholder="Create a password" required/>
+		<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+			{#if showPassword1}
+				<EyeOff onclick={()=>showPassword1=false} size={16} />
+			{:else if !showPassword1}
+				<Eye onclick={()=>showPassword1=true} size={16} />
+			{/if}
 		</button>
 	</div>
 </div>
@@ -37,11 +43,15 @@
 <div class="space-y-2">
 	<Label.Root htmlFor="confirm-password">Confirm Password</Label.Root>
 	<div class="relative">
-		<Input id="confirm-password" type={showConfirmPassword ? "text" : "password"} placeholder="Confirm your password" 
+		<Input id="confirm-password" type={showPassword2 ? "text" : "password"} placeholder="Confirm your password" 
 		class="border-destructive" required/>
 		
 		<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-			 <EyeOff size={16} />
+			{#if showPassword2}
+				<EyeOff onclick={()=>showPassword2=false} size={16} />
+			{:else if !showPassword2}
+				<Eye onclick={()=>showPassword2=true} size={16} />
+			{/if}
 		</button>
 		{#if passwordMatch}
 			<div class="absolute right-10 top-1/2 -translate-y-1/2 text-social-green">
@@ -59,6 +69,7 @@
 	type="checkbox"
 	class="rounded border-border mt-0.5"
 	required
+	bind:checked={agreeToTerms}
 	/>
 	<span class="text-muted-foreground">
 	I agree to the{" "}
@@ -73,13 +84,13 @@
 	</label>
 </div>
 
-<Button type="submit" className="w-full">
+<Button type="submit" disabled={disableSubmit} className="w-full">
 	Create Account
 </Button>
 
 <div class="relative">
 	<div class="absolute inset-0 flex items-center">
-		<span class="w-full border-t border-border" />
+		<span class="w-full border-t border-border"><span/>
 	</div>
 	
 	<div class="relative flex justify-center text-xs uppercase">

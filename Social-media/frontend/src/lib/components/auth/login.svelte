@@ -5,7 +5,6 @@
 	import { EyeOff, Eye, Check } from "@lucide/svelte";
 	
 	let { disable } = $props()
-	console.log(disable)
 	
 	let showPassword = $state<boolean>(true)
 	let showConfirmPassword = $state<boolean>(true)
@@ -24,7 +23,11 @@
 	<div class="relative">
 		<Input id="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" required />
 		<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-			<EyeOff size={16} />
+			{#if showPassword}
+				<EyeOff onclick={()=>showPassword=false} size={16} />
+			{:else if !showPassword}
+				<Eye onclick={()=>showPassword=true} size={16} />
+			{/if}
 		</button>
 	</div>
 </div>
@@ -45,7 +48,7 @@
 
 <div class="relative">
 	<div class="absolute inset-0 flex items-center">
-		<span class="w-full border-t border-border" />
+		<span class="w-full border-t border-border"><span/>
 	</div>
 	
 	<div class="relative flex justify-center text-xs uppercase">
