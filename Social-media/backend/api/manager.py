@@ -34,6 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, blank=True, null=True, unique=True)
     bio = models.TextField()
     location = models.CharField(max_length=100, blank=True, null=True)
+    website = models.CharField(max_length=100, blank=True, null=True)
     profile_pic = models.ImageField(default="default.jpg", upload_to=user_directory_path)
     follows = models.ManyToManyField('self',
                                         symmetrical=False,

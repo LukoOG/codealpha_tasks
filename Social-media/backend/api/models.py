@@ -8,12 +8,12 @@ from django.dispatch import receiver
 today = datetime.date.today()
 
 def media_directory_path(instance, filename):
-    return 'posts/media/{2}/{0}/{1}'.format(instance.user.user.username,
+    return 'posts/media/{2}/{0}/{1}'.format(instance.user.username,
                                             filename, today)
 # Create your models here.
 class Post(models.Model):
     user = models.ForeignKey(User,
-                                related_name='user_post',
+                                related_name='user_posts',
                                 on_delete=models.CASCADE)
     media = models.FileField(upload_to=media_directory_path,
                              null=True,
@@ -21,14 +21,17 @@ class Post(models.Model):
     message = models.CharField(null=True, max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     like = models.ManyToManyField(User)
+    
+    def __str__(self):
+        return f"{self.user.username} posted {self.message}"
 
 class Comment(models.Model):
     user = models.ForeignKey(User,
-                                related_name='user_comment',
+                                related_name='user_comments',
                                 on_delete=models.CASCADE)
     edited = models.BooleanField(blank=True, null=True, default=False)
     post = models.ForeignKey(Post,
-                             related_name='post_comment',
+                             related_name='post_comments',
                              on_delete=models.CASCADE)
     message = models.CharField(null=True, max_length=255)
     date = models.DateTimeField(auto_now_add=True)
@@ -38,7 +41,7 @@ class Comment(models.Model):
 
 class Reply(models.Model):
     user = models.ForeignKey(User,
-                                related_name='user_reply',
+                                related_name='user_replies',
                                 on_delete=models.CASCADE)
     message = models.CharField(null=True, max_length=255)
     date = models.DateTimeField(auto_now_add=True)
