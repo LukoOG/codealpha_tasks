@@ -10,7 +10,7 @@
 	let navigationItems = [
 		{ title: "Home", url: "/", icon: House },
 		{ title: "Messages", url: "/messages", icon: Mail },
-		{ title: "Explore", url: "/", icon: Search },
+		{ title: "Explore", url: "/explore", icon: Search },
 	];
 	
 	let { user } = $props();

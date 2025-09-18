@@ -5,6 +5,10 @@
 	import Textarea from "$lib/components/ui/textarea.svelte"
 	import { ArrowLeft } from "@lucide/svelte";
 	
+	
+	let { data } = $props()
+	let { user } = data
+	console.log(user)
 </script>
 
 <section class="max-w-2xl mx-auto">
