@@ -103,6 +103,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "followers",
             "posts",
         ]
+        read_only_fields = ["joinedDate", "following", "followers", "posts"]
 
     def get_name(self, obj):
         return f"{obj.first_name} {obj.last_name}".strip()
