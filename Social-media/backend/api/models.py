@@ -8,8 +8,9 @@ from django.dispatch import receiver
 today = datetime.date.today()
 
 def media_directory_path(instance, filename):
-    return 'posts/media/{2}/{0}/{1}'.format(instance.user.username,
-                                            filename, today)
+    return 'posts/{0}/{1}/{2}'.format(today, 
+                                        instance.user.username,
+                                        filename)
 # Create your models here.
 class Post(models.Model):
     user = models.ForeignKey(User,
@@ -20,7 +21,7 @@ class Post(models.Model):
                              blank=True)
     message = models.CharField(null=True, max_length=255)
     date = models.DateTimeField(auto_now_add=True)
-    like = models.ManyToManyField(User)
+    like = models.ManyToManyField(User, blank=True)
     
     def __str__(self):
         return f"{self.user.username} posted {self.message}"

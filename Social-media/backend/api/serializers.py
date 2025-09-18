@@ -25,8 +25,8 @@ class PostSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(source="user", read_only=True)
     content = serializers.CharField(source="message")
     created_at = serializers.DateTimeField(source="date", format="%Y-%m-%dT%H:%M:%SZ")
-    likes = serializers.SerializerMethodField()
-    reposts = serializers.SerializerMethodField()
+    likesCount = serializers.SerializerMethodField()
+    repostsCount = serializers.SerializerMethodField()
     repliesCount = serializers.SerializerMethodField()
     isLiked = serializers.SerializerMethodField()
     isReposted = serializers.SerializerMethodField()
@@ -38,17 +38,17 @@ class PostSerializer(serializers.ModelSerializer):
             "author",
             "content",
             "created_at",
-            "likes",
-            "reposts",
+            "likesCount",
+            "repostsCount",
             "repliesCount",
             "isLiked",
             "isReposted",
             "image",
         ]
-    def get_likes(self, obj):
+    def get_likesCount(self, obj):
         return obj.like.count()
         
-    def get_reposts(self, obj):
+    def get_repostsCount(self, obj):
         return 0
     
     def get_repliesCount(self, obj):
