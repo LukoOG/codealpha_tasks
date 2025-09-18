@@ -1,6 +1,8 @@
 import { PUBLIC_BACKEND_URL } from "$env/static/public"
 
-export const load = async ({ cookies, parent, params, locals }) => {
+//Optimization: only fetch userData and move posts and followers fetch to client side then cache like in E-commerce
+
+export const load = async ({ cookies, parent, params, fetch, locals }) => {
 	//TODO: combine both endpoints into 1
 	const postRes = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/?username=${params.username}`)
 	const userRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}`)

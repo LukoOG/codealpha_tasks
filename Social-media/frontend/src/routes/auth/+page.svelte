@@ -3,7 +3,7 @@
     import { goto } from "$app/navigation";
     import { enhance } from '$app/forms';
     import type { PageProps } from "./$types.js";
-	import { X } from "@lucide/svelte";
+	import { X, ArrowLeft } from "@lucide/svelte";
 	
 	import Button from "$lib/components/ui/button.svelte";
     import Login from "$lib/components/auth/login.svelte";
@@ -26,6 +26,11 @@
 		}
 	}
 	
+
+	function goBack() {
+		history.length > 1 ? history.back() : goto("/");
+	}
+	
 </script>
 
 <!-- snippetss -->
@@ -42,6 +47,16 @@
 <!-- main html body -->
 <div class="min-h-screen w-full flex items-center justify-center bg-background px-4">
 	<div class="w-full max-w-md space-y-8">
+		<!-- Back button -->
+		<Button
+			onclick={goBack}
+			class="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+			variant="ghost"
+			size="sm"
+		>
+			<ArrowLeft class="h-5 w-5" />
+			<span class="text-sm font-medium">Back</span>
+		</Button>
 		<!-- Header -->
 		<div class="text-center">
 			<h1 class="text-3xl font-bold text-foreground">Swix</h1>

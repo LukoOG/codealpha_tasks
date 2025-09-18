@@ -2,14 +2,14 @@ import { PUBLIC_BACKEND_URL } from "$env/static/public"
 import { error, redirect } from '@sveltejs/kit';
 
 
-export const load = async ({ fetch, cookies, parent }) => {
+export const load = async ({cookies, fetch, parent }) => {
 	const { user } = await parent()
 	if(!user){
 		throw redirect(303, "/auth")
 	}	
-	const res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/me`,{
+	let res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/me`,{
 		headers:{
-			"Authorization":`Bearer ${cookies.accessToken}`
+			"Authorization":`Bearer ${cookies.get("accessToken")}`
 		}
 	})
 	if(res.ok){

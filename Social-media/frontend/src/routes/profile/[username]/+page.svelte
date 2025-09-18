@@ -1,18 +1,38 @@
 <script lang="ts">
 	import Postcard from "$lib/components/postcard.svelte";
 	import { Avatar, Tabs } from "bits-ui";
-	import { MapPin, LinkIcon, Calendar, Users } from "@lucide/svelte";
+	import { MapPin, LinkIcon, Calendar, Users, Settings } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button.svelte";
 	import { goto, invalidate } from "$app/navigation";
+	import { page } from "$app/state";
 	
 	let isFollowing = $state(false);
 	
 	const handleFollow = () => {}
 	
 	let { data } = $props()
-	let { posts, userData, followers } = data
+	$inspect(data.userData)
+	let { posts, userData, followers, user } = $derived(data)
+	
+	let username = $derived(page.params.username)
+	
+	function handleProfileClick(username) {
+		goto(`/profile/${username}`, { invalidateAll: true });
+	}
 	
 </script>
+
+{#snippet FollowOrEdit()}
+	{#if !user}
+		
+	{:else if user.username === username}
+		<Settings onclick={ () => goto("/profile/edit") } />
+	{:else if user.username !== username}
+		<Button variant= {isFollowing ? "outline" : "social"} onClick={handleFollow} class="px-6">
+			{isFollowing ? "Unfollow" : "Follow"}
+		</Button>
+	{/if}
+{/snippet}
 
 <section class="p-2 max-w-2xl ml-4">
       <!-- Header -->
@@ -30,14 +50,8 @@
             <Avatar.Image class="aspect-square h-full w-full" src="{userData.profile_pic}" />
             <Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square text-2xl">{userData.name[0]}</Avatar.Fallback>
           </Avatar.Root>
-          
-          <Button
-            variant={isFollowing ? "outline" : "social"}
-            onClick={handleFollow}
-            class="px-6"
-          >
-            {isFollowing ? "Unfollow" : "Follow"}
-          </Button>
+		  
+		  {@render FollowOrEdit()}
         </div>
 
         <div class="space-y-3">
@@ -109,8 +123,8 @@
         <Tabs.Content value="followers" class="mt-0">
           <div class="p-8 text-center text-muted-foreground divide-y">
 			{#each followers as follower (follower.id)}
-			<a class="contents" href="/profile/{follower.username}">
-				<div class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none cursor-pointer hover:bg-muted/50 transition-colors">
+				<div class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none cursor-pointer hover:bg-muted/50 transition-colors"
+				onclick={()=>handleProfileClick(follower.username)}>
 					<div class="p-6 pt-0 p-4">
 						<div class="flex items-start justify-between">
 							<div class="flex items-start gap-3 flex-1">
@@ -150,7 +164,6 @@
 						</div>
 					</div>
 				</div>
-			</a>
 			{/each}
           </div>
         </Tabs.Content>
