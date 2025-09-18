@@ -20,6 +20,8 @@
 		posts: 342
 	};
 	
+	let { data } = $props()
+	//$inspect(data.user)
 </script>
 
 <section class="p-2 max-w-2xl ml-4">

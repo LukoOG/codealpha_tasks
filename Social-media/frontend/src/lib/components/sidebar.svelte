@@ -17,9 +17,17 @@
 	
 	//console.log(page.url.pathname)
 </script>
+{#snippet actions()}
+	<div class="absolute bottom-2 p-2 m-2 flex w-[90%] flex-col justify-between gap-2">
+		<a href={undefined} class="flex items-center space-x-3 p-3 hover:bg-secondary rounded-lg transition-all duration-200">
+			<User class="h-4 w-4" />	
+			<span class="text-lg">pos</span>
+		</a>
+	</div>
+{/snippet}
 
 <!-- Sidebar container -->
-<section class="border-r fixed top-0 left-0 min-h-full flex flex-col bg-sidebar-background text-sidebar-foreground {collapsed ? "w-14" : "w-64"}">
+<section class="border-r fixed relative top-0 left-0 min-h-full flex flex-col bg-sidebar-background text-sidebar-foreground {collapsed ? "w-14" : "w-64"}">
 	<div class="p-4">
 		<div class="mb-8">
 			{#if !collapsed}
@@ -42,6 +50,7 @@
 					</li>
 				{/each}
 			</ul>
-		</div>   
+		</div> 	
 	</div>
+	{@render actions()}
 </section>

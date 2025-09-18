@@ -6,7 +6,7 @@
 	
 	let { disable } = $props()
 	
-	let showPassword = $state<boolean>(true)
+	let showPassword = $state<boolean>(false)
 	let showConfirmPassword = $state<boolean>(true)
 	let passwordMatch = $state<boolean>(true)
 
@@ -15,13 +15,13 @@
 
 <div class="space-y-2">
 	<Label.Root htmlFor="email">Email</Label.Root>
-	<Input id="email" type="email" placeholder="Enter your email" required/>
+	<Input name="email" id="email" type="email" placeholder="Enter your email" required/>
 </div>
 
 <div class="space-y-2">
 	<Label.Root htmlFor="password">Password</Label.Root>
 	<div class="relative">
-		<Input id="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" required />
+		<Input name="password" id="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" required />
 		<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
 			{#if showPassword}
 				<EyeOff onclick={()=>showPassword=false} size={16} />
@@ -42,13 +42,13 @@
 	</button>
 </div>
 
-<Button type="submit" className="w-full">
+<Button disabled = {disable} type="submit" className="w-full">
 	Sign In
 </Button>
 
 <div class="relative">
 	<div class="absolute inset-0 flex items-center">
-		<span class="w-full border-t border-border"><span/>
+		<span class="w-full border-t border-border"></span>
 	</div>
 	
 	<div class="relative flex justify-center text-xs uppercase">

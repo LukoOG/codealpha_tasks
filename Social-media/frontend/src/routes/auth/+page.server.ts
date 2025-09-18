@@ -11,9 +11,9 @@ export const load = ({ locals }) => {
 
 export const actions: Actions = {
     login: async ({ request, fetch, cookies }) => {
-        const data = await request.formData();
-        const email = data.get("email")
-        const password = data.get("password")
+        const formData = await request.formData();
+        const email = formData.get("email")
+        const password = formData.get("password")
 
         const res = await fetch(
             `${PUBLIC_BACKEND_URL}/api/auth/login`,
@@ -43,9 +43,9 @@ export const actions: Actions = {
 			}
 		}
 
-
-        if(!res.ok){
-            const error = await res.json().catch(() => ({}));
+        if(!res.ok || res.status !== 200){
+            const error = await res.json().catch(()=>({}));
+			console.log(error)
             return fail(res.status, { error });
         }
 
@@ -68,12 +68,13 @@ export const actions: Actions = {
                 credentials: "include",
             }
         )
-
+		
+		
         if(!res.ok){
             const error = await res.json().catch(() => ({}));
             return fail(res.status, { error });
         }
 
-        throw redirect(303, '/auth/?form_state=login')
+        throw redirect(303, '/auth')
     }
 }

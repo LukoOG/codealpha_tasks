@@ -82,4 +82,10 @@
 			</p>
 		</div>
 	</div>
+	{#if form?.error}
+		<div class="p-4 rounded-md border border-border absolute right-1 top-[-25%] bg-destructive h-fit min-w-full">
+			<p class="text-md font-semibold text-center text-destructive-foreground">{ form.error.detail }</p>
+		</div>
+	{/if}
 </div>
+
