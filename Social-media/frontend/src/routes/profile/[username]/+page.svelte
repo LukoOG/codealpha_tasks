@@ -7,23 +7,10 @@
 	let isFollowing = $state(false);
 	
 	const handleFollow = () => {}
-	/*
-	const userData = {
-		name: "Alex Rivera",
-		username: "alexdev",
-		bio: "Full-stack developer passionate about creating beautiful, functional web applications. Always learning, always building.",
-		location: "San Francisco, CA",
-		website: "alexrivera.dev",
-		joinedDate: "March 2020",
-		following: 420,
-		followers: 1248,
-		posts: 342
-	};
-	*/
 	
 	let { data } = $props()
 	let { posts, userData } = data
-	$inspect(userData)
+	
 </script>
 
 <section class="p-2 max-w-2xl ml-4">
@@ -31,7 +18,7 @@
       <div class="sticky top-0 z-10 bg-background/95 backdrop-blur border-b p-4">
         <div>
           <h1 class="text-xl font-bold">{userData.name}</h1>
-          <p class="text-sm text-muted-foreground">{userData.posts} posts</p>
+          <p class="text-sm text-muted-foreground">{userData.posts} {userData.posts > 1 ? "posts" : "post"} </p>
         </div>
       </div>
 
