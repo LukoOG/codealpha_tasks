@@ -54,10 +54,10 @@
 		<div class="bg-card border border-border rounded-lg p-6 shadow-sm">
 			<!-- Toggle Buttons -->
 			<div class="flex mb-6 p-1 bg-muted rounded-lg">
-				<Button variant={isLogin ? "default" : "ghost"} className="flex-1 cursor-pointer" onclick={() => {isLogin = true}}>
+				<Button variant={isLogin ? "default" : "ghost"} class="flex-1 cursor-pointer" onclick={() => {isLogin = true}}>
 					Sign In
 				</Button>
-				<Button variant={!isLogin ? "default" : "ghost"} className="flex-1 cursor-pointer" onclick={() => {isLogin = false}}>
+				<Button variant={!isLogin ? "default" : "ghost"} class="flex-1 cursor-pointer" onclick={() => {isLogin = false}}>
 					Sign Up
 				</Button>
 			</div>

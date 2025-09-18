@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Plus, House, User, Mail } from "@lucide/svelte";
+	import { PUBLIC_BACKEND_URL } from "$env/static/public";
+
+	import { Plus, House, User, Mail, Search } from "@lucide/svelte";
 	import { page } from "$app/state";
 	
 	let collapsed = $state(false);
@@ -8,21 +10,43 @@
 	let navigationItems = [
 		{ title: "Home", url: "/", icon: House },
 		{ title: "Messages", url: "/messages", icon: Mail },
-		{ title: "Profile", url: "/profile", icon: User },
+		{ title: "Explore", url: "/", icon: Search },
 	];
+	
+	let { user } = $props();
+	let isAuthenticated = $derived.by(()=>user ? true : false)
+	$inspect(user)
 	
 	function getNavCls(isActive: boolean) {
 		return isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
 	}
 	
-	//console.log(page.url.pathname)
+	
 </script>
 {#snippet actions()}
-	<div class="absolute bottom-2 p-2 m-2 flex w-[90%] flex-col justify-between gap-2">
-		<a href={undefined} class="flex items-center space-x-3 p-3 hover:bg-secondary rounded-lg transition-all duration-200">
-			<User class="h-4 w-4" />	
-			<span class="text-lg">pos</span>
-		</a>
+	<div class="absolute bottom-2 p-2 m-2 w-[90%]">
+		{#if isAuthenticated}
+			<!-- User profile button -->
+			<a
+				href="/profile/{user.username}"
+				class="flex items-center space-x-3 p-3 hover:bg-secondary rounded-lg transition-all duration-200"
+			>
+				<img
+					src="{PUBLIC_BACKEND_URL}/{user.avatar}"
+					alt="Profile"
+					class="h-10 w-10 rounded-full object-cover"
+				/>
+				<span class="text-lg font-medium">@{user.username}</span>
+			</a>
+		{:else}
+			<!-- Login button -->
+			<a
+				href="/auth"
+				class="flex items-center justify-center p-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200"
+			>
+				Log in
+			</a>
+		{/if}
 	</div>
 {/snippet}
 

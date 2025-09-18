@@ -13,7 +13,7 @@
   //export { textareaEl as ref };
   
   let {
-	className = "",
+	class: className = "",
 	value,
 	placeholder,
 	name,

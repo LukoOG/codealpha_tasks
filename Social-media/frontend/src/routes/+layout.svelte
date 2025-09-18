@@ -4,7 +4,7 @@
 	import Sidebar from '$lib/components/sidebar.svelte';
 	import { page } from '$app/state';
 
-	let { children } = $props();
+	let { data, children } = $props();
 		
 	let route = page.url.pathname
 	
@@ -19,7 +19,7 @@
 <div class="min-h-screen flex w-full">
 	{#if route !== "/auth"}
 		{#await sidebar then component}
-			<component.default/>
+			<component.default user={data.user} />
 			<div class="flex-1">
 				<div class="flex-1">
 					<header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

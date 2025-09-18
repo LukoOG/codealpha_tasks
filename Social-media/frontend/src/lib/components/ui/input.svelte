@@ -11,7 +11,7 @@
   
   let {
 	type = "text",
-	className = "",
+	class: className = "",
 	value,
 	disabled = false,
 	placeholder,
