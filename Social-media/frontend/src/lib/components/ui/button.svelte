@@ -9,7 +9,7 @@
 	interface buttonProps {
 		variant: variantType,
 		size: sizeType,
-		className: string,
+		class: string,
 		type: buttonType,
 		disabled: boolean,
 		children: Snippet,
@@ -19,7 +19,7 @@
 		variant = "default",
 		size = "default",
 		type = "button",
-		className="",
+		class: className="",
 		disabled = false,
 		children, ...others
 	}: buttonProps = $props()
@@ -33,6 +33,11 @@
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+		social: "bg-social-blue text-white hover:bg-social-blue-hover transition-all duration-200",
+		like: "text-muted-foreground hover:text-social-red hover:bg-social-red/10 transition-all duration-200",
+        "like-active": "text-social-red bg-social-red/10",
+        repost: "text-muted-foreground hover:text-social-green hover:bg-social-green/10 transition-all duration-200",
+        "repost-active": "text-social-green bg-social-green/10",
       },
       size: {
         default: "h-10 px-4 py-2",

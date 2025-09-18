@@ -7,7 +7,7 @@
 	let isFollowing = $state(false);
 	
 	const handleFollow = () => {}
-	
+	/*
 	const userData = {
 		name: "Alex Rivera",
 		username: "alexdev",
@@ -19,9 +19,11 @@
 		followers: 1248,
 		posts: 342
 	};
+	*/
 	
 	let { data } = $props()
-	//$inspect(data.user)
+	let { posts, userData } = data
+	$inspect(userData)
 </script>
 
 <section class="p-2 max-w-2xl ml-4">
@@ -89,7 +91,7 @@
       </div>
 
       <!-- Tabs -->
-      <Tabs.Root defaultValue="posts" class="w-full">
+      <Tabs.Root value="posts" class="w-full">
         <Tabs.List class="grid w-full grid-cols-3 bg-transparent border-b rounded-none h-auto">
           <Tabs.Trigger value="posts" class="data-[state=active]:border-b-2 cursor-pointer data-[state=active]:border-social-blue rounded-none inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
             Posts
@@ -103,7 +105,11 @@
         </Tabs.List>
         
         <Tabs.Content value="posts" class="mt-0">
-          <p>stuff</p>
+			<div class="divide-y divide-border">
+				{#each posts as post (post.id)}
+					<Postcard {post} />
+				{/each}
+			</div>
         </Tabs.Content>
         
         <Tabs.Content value="replies" class="mt-0">
