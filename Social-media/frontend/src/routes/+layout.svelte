@@ -16,11 +16,11 @@
 	<title>Swix</title>
 </svelte:head>
 
-<div class="min-h-screen relative flex w-full">
+<div class="min-h-screen flex w-full">
 	{#if route !== "/auth"}
 		{#await sidebar then component}
 			<component.default/>
-			<div class="flex-1 ml-14 md:ml-64">
+			<div class="flex-1">
 				<div class="flex-1">
 					<header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 						<div class="container flex h-14 items-center">

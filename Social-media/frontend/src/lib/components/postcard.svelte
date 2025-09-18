@@ -6,11 +6,6 @@
 	
 	let { post } = $props()
 	
-	let isLiked = $state<boolean>(false)
-	let likesCount = $state<number>(45)
-	let repostsCount = $state<number>(2)
-	let isReposted = $state<boolean>(false)
-	
 	const handleReply = () => {}
 	const handleLike = () => {}
 	const handleComment = () => {}
@@ -37,7 +32,7 @@
 					<span class="text-muted-foreground">@{post.author.username}</span>
 					<span class="text-muted-foreground">·</span>
 					<span class="text-muted-foreground text-sm">
-						{formatDistanceToNow(post.createdAt, { addSuffix: true })}
+						{formatDistanceToNow(post.created_at, { addSuffix: true })}
 					</span>
 									  
 
@@ -84,14 +79,14 @@
 						<span class="text-sm">{post.repliesCount}</span>
 					</Button>
 
-					<Button variant={isReposted ? "repost-active" : "repost"} size="sm">
+					<Button variant={post.isReposted ? "repost-active" : "repost"} size="sm">
 						<Repeat2 class="h-4 w-4 mr-1" />
-						<span class="text-sm">{repostsCount}</span>
+						<span class="text-sm">{post.repostsCount}</span>
 					</Button>
 
-					<Button variant={isLiked ? "like-active" : "like"} size="sm">
+					<Button variant={post.isLiked ? "like-active" : "like"} size="sm">
 						<Heart class={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
-						<span class="text-sm">{likesCount}</span>
+						<span class="text-sm">{post.likesCount}</span>
 					</Button>
 
 					<Button variant="ghost" size="sm" class="text-muted-foreground hover:text-social-blue hover:bg-social-blue/10 transition-all duration-200">

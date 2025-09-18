@@ -27,7 +27,7 @@
 {/snippet}
 
 <!-- Sidebar container -->
-<section class="border-r fixed relative top-0 left-0 min-h-full flex flex-col bg-sidebar-background text-sidebar-foreground {collapsed ? "w-14" : "w-64"}">
+<section class="border-r fixed sticky top-0 left-0 max-h-screen flex flex-col bg-sidebar-background text-sidebar-foreground {collapsed ? "w-14" : "w-64"}">
 	<div class="p-4">
 		<div class="mb-8">
 			{#if !collapsed}
