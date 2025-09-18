@@ -63,8 +63,9 @@ class PostSerializer(serializers.ModelSerializer):
         return False
         
     def get_image(self, obj):
+        request = self.context.get('request')
         if obj.media:
-            return obj.media
+            return request.build_absolute_uri(obj.media.url)
         return None
         
 class RegisterUserSerializer(serializers.ModelSerializer):
