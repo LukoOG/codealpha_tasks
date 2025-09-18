@@ -17,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
     # Fieldsets for viewing/editing a user in admin
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'profile_pic', 'username', 'phone_number', 'follows')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'bio', 'location', 'website', 'profile_pic', 'username', 'phone_number', 'follows')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login',)}),
     )

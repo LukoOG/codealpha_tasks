@@ -27,6 +27,8 @@ class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token['email'] = user.email
+        token['username'] = user.username
+        token['avatar'] = user.profile_pic.url
         return token
 
 class LoginTokenObtainPairView(TokenObtainPairView):
