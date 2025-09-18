@@ -1,15 +1,16 @@
 <script lang="ts">
 	import Postcard from "$lib/components/postcard.svelte";
 	import { Avatar, Tabs } from "bits-ui";
-	import { MapPin, LinkIcon, Calendar } from "@lucide/svelte";
+	import { MapPin, LinkIcon, Calendar, Users } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button.svelte";
+	import { goto, invalidate } from "$app/navigation";
 	
 	let isFollowing = $state(false);
 	
 	const handleFollow = () => {}
 	
 	let { data } = $props()
-	let { posts, userData } = data
+	let { posts, userData, followers } = data
 	
 </script>
 
@@ -26,7 +27,7 @@
       <div class="p-6 border-b">
         <div class="flex items-start justify-between mb-4">
           <Avatar.Root class="h-24 w-24">
-            <Avatar.Image class="aspect-square h-full w-full" src="{userData.image}" />
+            <Avatar.Image class="aspect-square h-full w-full" src="{userData.profile_pic}" />
             <Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square text-2xl">{userData.name[0]}</Avatar.Fallback>
           </Avatar.Root>
           
@@ -54,7 +55,7 @@
             </div>
             <div class="flex items-center gap-1">
               <LinkIcon class="h-4 w-4" />
-              <a href={`https://${userData.website}`} class="text-social-blue hover:underline">
+              <a target="blank" href={userData.website} class="text-social-blue hover:underline">
                 {userData.website}
               </a>
             </div>
@@ -71,7 +72,7 @@
             </div>
             <div>
               <span class="font-bold text-foreground">{userData.followers}</span>
-              <span class="text-muted-foreground ml-1">Followers</span>
+              <span class="text-muted-foreground ml-1">{userData.followers > 1 ? "Followers" : "Follower"}</span>
             </div>
           </div>
         </div>
@@ -86,8 +87,8 @@
           <Tabs.Trigger value="replies" class="data-[state=active]:border-b-2 cursor-pointer data-[state=active]:border-social-blue rounded-none inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
             Replies
           </Tabs.Trigger>
-          <Tabs.Trigger value="likes" class="data-[state=active]:border-b-2 cursor-pointer data-[state=active]:border-social-blue rounded-none inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-            Likes
+          <Tabs.Trigger value="followers" class="data-[state=active]:border-b-2 cursor-pointer data-[state=active]:border-social-blue rounded-none inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+            Followers
           </Tabs.Trigger>
         </Tabs.List>
         
@@ -105,9 +106,52 @@
           </div>
         </Tabs.Content>
         
-        <Tabs.Content value="likes" class="mt-0">
-          <div class="p-8 text-center text-muted-foreground">
-            Liked posts coming soon!
+        <Tabs.Content value="followers" class="mt-0">
+          <div class="p-8 text-center text-muted-foreground divide-y">
+			{#each followers as follower (follower.id)}
+			<a class="contents" href="/profile/{follower.username}">
+				<div class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none cursor-pointer hover:bg-muted/50 transition-colors">
+					<div class="p-6 pt-0 p-4">
+						<div class="flex items-start justify-between">
+							<div class="flex items-start gap-3 flex-1">
+								<Avatar.Root class="h-12 w-12">
+									<Avatar.Image src={follower.profile_pic} />
+									<Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square text-2xl">{follower.name[0]}</Avatar.Fallback>
+								</Avatar.Root>
+
+								<div class="flex-1 min-w-0">
+									<div class="flex items-center gap-2">
+										<h3 class="font-semibold text-foreground truncate">
+										{follower.name}
+										</h3>
+										<span class="text-muted-foreground">@{follower.username}</span>
+										</div>
+
+										<p class="text-sm text-foreground mt-1 line-clamp-2">
+										{follower.bio}
+										</p>
+
+										<div class="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+										<div class="flex items-center gap-1">
+										<MapPin class="h-3 w-3" />
+										<span>{follower.location}</span>
+										</div>
+										<div class="flex items-center gap-1">
+										<Users class="h-3 w-3" />
+										<span>{follower.followers} followers</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<Button variant="outline" size="sm" class="ml-4">
+							View
+							</Button>
+						</div>
+					</div>
+				</div>
+			</a>
+			{/each}
           </div>
         </Tabs.Content>
       </Tabs.Root>
