@@ -85,7 +85,7 @@
 					</Button>
 
 					<Button variant={post.isLiked ? "like-active" : "like"} size="sm">
-						<Heart class={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
+						<Heart class={`h-4 w-4 mr-1 ${post.isLiked ? 'fill-current' : ''}`} />
 						<span class="text-sm">{post.likesCount}</span>
 					</Button>
 
