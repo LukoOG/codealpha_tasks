@@ -93,9 +93,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            "id",
             "name",
             "username",
             "bio",
+            "profile_pic",
             "location",
             "website",
             "joinedDate",
@@ -103,7 +105,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "followers",
             "posts",
         ]
-        read_only_fields = ["joinedDate", "following", "followers", "posts"]
+        read_only_fields = ["id", "joinedDate", "following", "followers", "posts"]
 
     def get_name(self, obj):
         return f"{obj.first_name} {obj.last_name}".strip()
@@ -119,3 +121,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_posts(self, obj):
         return obj.user_posts.count()
+

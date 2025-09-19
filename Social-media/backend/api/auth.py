@@ -66,16 +66,15 @@ class LoginTokenObtainPairView(TokenObtainPairView):
     
 class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
-        refresh = request.COOKIES.get("refreshToken")
-        if refresh is None:
+        refresh = request.data.get("refresh")
+        if refresh is None or not refresh:
             return Response({"detail": "Refresh token missing"}, status=status.HTTP_401_UNAUTHORIZED)
         try:
             token = RefreshToken(refresh)
             access = str(token.access_token)
         except Exception:
             return Response({"detail": "Invalid refresh token"}, status=status.HTTP_401_UNAUTHORIZED)
-        
-        response = Response({"success": True, "access":access})
+       
         """
         response.set_cookie(
             key="accessToken",
@@ -86,7 +85,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             max_age=60 * 15,
         )
         """
-        return response
+        return Response({"success": True, "access":access})
     
 class LogoutView(APIView):
     def post(self, request):

@@ -51,6 +51,31 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(user_profile, context={"request":request})
         return Response({ "following":following, "follows":user_profile_follows }, status=status.HTTP_200_OK)
         
+    @action(detail=True, methods=["get"])
+    def following(self, request, username=None):
+        """Return all users this user is following"""
+        user = self.get_object()
+        following = user.followed_by.all()  # assuming you have follows ManyToMany
+        serializer = self.get_serializer(following, many=True)
+        return Response(serializer.data)
+        
+    @action(detail=True, methods=['get'])
+    def followers(self, request, username=None):
+        user = self.get_object()
+        followers = user.follows.all()
+        serializer = self.get_serializer(followers, many=True)
+        return Response(serializer.data)
+    @action(detail=False, methods=['get'])
+    def me(self, request):
+        if request.user:
+            serializer = self.get_serializer(request.user, context={"request":request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"error":"no logged in user"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        
+    
+        
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.select_related("user").prefetch_related("like").all().order_by("-date")
     serializer_class = PostSerializer

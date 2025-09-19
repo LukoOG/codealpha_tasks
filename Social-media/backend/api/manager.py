@@ -32,10 +32,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=20)
     username = models.CharField(max_length=40, blank=True, null=True, unique=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True, unique=True)
-    bio = models.TextField()
+    bio = models.TextField(blank=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     website = models.CharField(max_length=100, blank=True, null=True)
-    profile_pic = models.ImageField(default="default.jpg", upload_to=user_directory_path)
+    profile_pic = models.ImageField(default="/default.jpeg", upload_to=user_directory_path, blank=True)
     follows = models.ManyToManyField('self',
                                         symmetrical=False,
                                         blank=True,
