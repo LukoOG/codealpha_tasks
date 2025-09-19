@@ -26,7 +26,7 @@
 			<div class="flex-1 min-w-0">
 				<div class="flex items-center space-x-2">
 					<h3 class="font-bold text-foreground hover:underline cursor-pointer">
-						{post.author.name}
+						<a class="contents" href="/profile/{post.author.username}">{post.author.name}</a>
 					</h3>
 
 					<span class="text-muted-foreground">@{post.author.username}</span>

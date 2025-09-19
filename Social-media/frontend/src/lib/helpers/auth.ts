@@ -1,5 +1,7 @@
+import { PUBLIC_BACKEND_URL } from "$env/static/public";
+
 export async function logout () {
-	const res = await fetch("http://127.0.0.1:8000/api/auth/logout", { method: "POST"})
+	const res = await fetch(`${PUBLIC_BACKEND_URL}/api/auth/logout`, { method: "POST"})
         if (res.ok){
             return true
         }

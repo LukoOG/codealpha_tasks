@@ -3,6 +3,9 @@
 
 	import { Plus, House, User, Mail, Search } from "@lucide/svelte";
 	import { page } from "$app/state";
+	import { goto } from "$app/navigation";
+	
+	import Button from "$lib/components/ui/button.svelte"
 	
 	let collapsed = $state(false);
 	let showCreatePost = $state(false);
@@ -15,13 +18,24 @@
 	
 	let { user } = $props();
 	let isAuthenticated = $derived.by(()=>user ? true : false)
-	$inspect(user)
+	$inspect(user?.username)
 	
 	function getNavCls(isActive: boolean) {
 		return isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
 	}
 	
-	
+	const logout = 	async () => {
+		try {
+			await fetch('/logout', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' }
+			});
+
+			goto('/', { invalidateAll: true });
+		} catch (error) {
+			console.error('Logout failed', error);
+		}
+	}
 </script>
 {#snippet actions()}
 	<div class="absolute bottom-2 p-2 m-2 w-[90%]">
@@ -38,6 +52,13 @@
 				/>
 				<span class="text-lg font-medium">@{user.username}</span>
 			</a>
+			
+			<Button
+				onclick={logout}
+				class="mt-5 flex items-center justify-center p-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200"
+			>
+				Log out
+			</Button>
 		{:else}
 			<!-- Login button -->
 			<a

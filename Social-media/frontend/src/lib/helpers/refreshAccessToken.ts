@@ -4,14 +4,16 @@ export default async function refreshAccessToken(event: any) {
   const refresh = event.cookies.get("refreshToken");
   if (!refresh) return null;
   
-  console.log(refresh)
 
   try {
     const res = await fetch(`${PUBLIC_BACKEND_URL}/api/auth/token/refresh`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization":`Bearer ${refresh}` },
-      body: JSON.stringify({ refresh: refresh }),
-	  credentials:"include",
+	  headers:{
+		  "Authorization": `Bearer ${event.cookies.get("accessToken")}`,
+		  "Content-Type":"application/json",
+	  },
+      body: JSON.stringify({ refresh }),
+	  credentials: "include"
     });
 	
 	console.log(res)

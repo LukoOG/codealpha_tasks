@@ -13,6 +13,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			event.locals.user = user;			
 		}catch(error){
 			console.warn("Access expired, attempting refresh...");
+			console.log("Access expired, attempting refresh...");
 			access = await refreshAccessToken(event);
 			
 			if (access) {

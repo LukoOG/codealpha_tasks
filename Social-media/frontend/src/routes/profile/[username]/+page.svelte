@@ -11,7 +11,7 @@
 	const handleFollow = () => {}
 	
 	let { data } = $props()
-	$inspect(data.userData)
+	//$inspect(data.userData)
 	let { posts, userData, followers, user } = $derived(data)
 	
 	let username = $derived(page.params.username)
@@ -26,7 +26,7 @@
 	{#if !user}
 		
 	{:else if user.username === username}
-		<Settings onclick={ () => goto("/profile/edit") } />
+		<Settings class="cursor-pointer" size={24} onclick={ () => goto("/profile/edit") } />
 	{:else if user.username !== username}
 		<Button variant= {isFollowing ? "outline" : "social"} onClick={handleFollow} class="px-6">
 			{isFollowing ? "Unfollow" : "Follow"}
