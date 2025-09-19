@@ -95,6 +95,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "first_name",
+            "last_name",
             "username",
             "bio",
             "profile_pic",

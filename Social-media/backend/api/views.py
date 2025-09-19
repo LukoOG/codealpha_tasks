@@ -67,11 +67,11 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     @action(detail=False, methods=['get'])
     def me(self, request):
-        if request.user:
-            serializer = self.get_serializer(request.user, context={"request":request})
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({"error":"no logged in user"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user or not request.user.is_authenticated:
+            return Response({"error": "no logged in user"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer = self.get_serializer(request.user, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
         
     
