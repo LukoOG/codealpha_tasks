@@ -25,13 +25,13 @@ export const load = async ({ cookies, parent, params, fetch, locals }) => {
 }
 
 export const actions: Actions = {
-    follow: async ({ params, cookies }) => {
+    toggle_follow: async ({ params, cookies }) => {
         const access = cookies.get("accessToken");
         if (!access) {
             return { error: "Not authenticated" };
         }
 
-        const res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/follow/`, {
+        const res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/toggle_follow/`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${access}`,
@@ -42,26 +42,7 @@ export const actions: Actions = {
         if (!res.ok) {
             return { error: "Failed to follow user" };
         }
-        return { success: true };
-    },
-
-    unfollow: async ({ params, cookies }) => {
-        const access = cookies.get("accessToken");
-        if (!access) {
-            return { error: "Not authenticated" };
-        }
-
-        const res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/unfollow/`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${access}`,
-                "Content-Type": "application/json"
-            }
-        });
-
-        if (!res.ok) {
-            return { error: "Failed to unfollow user" };
-        }
-        return { success: true };
+		const data = await res.json()
+        return { success: true, following: data.following, no_follows:data.follows };
     }
 };

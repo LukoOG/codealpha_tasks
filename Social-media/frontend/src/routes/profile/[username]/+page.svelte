@@ -1,18 +1,18 @@
 <script lang="ts">
 	import Postcard from "$lib/components/postcard.svelte";
+	import { enhance } from "$app/forms";
 	import { Avatar, Tabs } from "bits-ui";
 	import { MapPin, LinkIcon, Calendar, Users, Settings } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button.svelte";
 	import { goto, invalidate } from "$app/navigation";
 	import { page } from "$app/state";
 	
-	let isFollowing = $state(false);
-	
 	const handleFollow = () => {}
 	
 	let { data } = $props()
-	//$inspect(data.userData)
 	let { posts, userData, followers, user } = $derived(data)
+	let isFollowing = $derived(followers ? followers.some((follower)=>follower.username === user.username) : false);
+	$inspect(isFollowing)
 	
 	let username = $derived(page.params.username)
 	
@@ -20,6 +20,17 @@
 		goto(`/profile/${username}`, { invalidateAll: true });
 	}
 	
+	let followerCount = $state<number>(userData.followers)
+	
+	const handleFollowEnhance = async () => {
+		return async ({ result, update }) => {
+			await update();
+			const { following, no_follows } = result.data
+			console.log(no_follows)
+			isFollowing = following
+			followerCount = no_follows
+		}
+	}
 </script>
 
 {#snippet FollowOrEdit()}
@@ -28,9 +39,11 @@
 	{:else if user.username === username}
 		<Settings class="cursor-pointer" size={24} onclick={ () => goto("/profile/edit") } />
 	{:else if user.username !== username}
-		<Button variant= {isFollowing ? "outline" : "social"} onClick={handleFollow} class="px-6">
-			{isFollowing ? "Unfollow" : "Follow"}
-		</Button>
+		<form method="POST" action="?/toggle_follow" use:enhance={handleFollowEnhance}>
+			<Button type="submit" variant= {isFollowing ? "outline" : "social"} onClick={handleFollow} class="px-6">
+				{isFollowing ? "Unfollow" : "Follow"}
+			</Button>
+		</form>
 	{/if}
 {/snippet}
 
@@ -85,7 +98,7 @@
               <span class="text-muted-foreground ml-1">Following</span>
             </div>
             <div>
-              <span class="font-bold text-foreground">{userData.followers}</span>
+              <span class="font-bold text-foreground">{followerCount}</span>
               <span class="text-muted-foreground ml-1">{userData.followers > 1 ? "Followers" : "Follower"}</span>
             </div>
           </div>
