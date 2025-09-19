@@ -5,9 +5,14 @@ import type { Actions } from "./$types";
 //Optimization: only fetch userData and move posts and followers fetch to client side then cache like in E-commerce
 
 export const load = async ({ cookies, parent, params, fetch, locals }) => {
+	const access = cookies.get("accessToken");
 	//TODO: combine both endpoints into 1
 	const postRes = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/?username=${params.username}`)
-	const userRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}`)
+	const userRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}`,{
+		headers:{
+			"Authorization":`Bearer ${access}`
+		}
+	})
 	const followersRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/following/`)
 	
 	if (postRes.ok && userRes.ok){

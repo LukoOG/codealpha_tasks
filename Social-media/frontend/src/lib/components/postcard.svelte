@@ -4,12 +4,29 @@
 	import { formatDistanceToNow } from "date-fns";
 	import Button from "$lib/components/ui/button.svelte";
 	
+	import { enhance } from "$app/forms";
+	
 	let { post } = $props()
+	let isLiked = $state<boolean>(post.isLiked)
+	let likesCount = $state<number>(post.likesCount)
+	
+	$inspect(isLiked)
 	
 	const handleReply = () => {}
 	const handleLike = () => {}
 	const handleComment = () => {}
 	const handleRepost = () => {}
+	
+	
+	const handleLikeEnhance = async () => {
+		return async ({ result, update }) => {
+			await update();
+
+			const { liked, likes } = result
+			isLiked = liked
+			likesCount = likes
+		}
+	}
 </script>
 
 <div class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none transition-colors hover:bg-muted/20">
@@ -83,11 +100,13 @@
 						<Repeat2 class="h-4 w-4 mr-1" />
 						<span class="text-sm">{post.repostsCount}</span>
 					</Button>
-
-					<Button variant={post.isLiked ? "like-active" : "like"} size="sm">
-						<Heart class={`h-4 w-4 mr-1 ${post.isLiked ? 'fill-current' : ''}`} />
-						<span class="text-sm">{post.likesCount}</span>
-					</Button>
+					
+					<form method="POST" action={`/api/posts/${post.id}/like`} use:enhance={handleLikeEnhance}>
+						<Button type="submit" variant={isLiked ? "like-active" : "like"} size="sm">
+							<Heart class={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
+							<span class="text-sm">{likesCount}</span>
+						</Button>
+					</form>
 
 					<Button variant="ghost" size="sm" class="text-muted-foreground hover:text-social-blue hover:bg-social-blue/10 transition-all duration-200">
 						<Share class="h-4 w-4" />
