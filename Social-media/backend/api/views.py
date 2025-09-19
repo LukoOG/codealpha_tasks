@@ -36,7 +36,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
     
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
-    def toggle_follow(self, request, pk=None):
+    def toggle_follow(self, request, username=None):
         user = request.user
         user_profile = self.get_object()#target user account
         if user.follows.filter(id=user_profile.id).exists():
@@ -46,7 +46,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             user.follows.add(user_profile)
             following = True
         user.save()
-        user_profile_follows = user_profile.follows.count() #how many accounts follow target user after update
+        user_profile_follows = user_profile.followed_by.count() #how many accounts follow target user after update
         
         serializer = self.get_serializer(user_profile, context={"request":request})
         return Response({ "following":following, "follows":user_profile_follows }, status=status.HTTP_200_OK)
@@ -99,10 +99,9 @@ class PostViewSet(viewsets.ModelViewSet):
             liked = True
         post.save()
         
-        serializer = self.get_serializer(post, context={"request": request})
+        #serializer = self.get_serializer(post, context={"request": request})
         
         return Response({
             "liked":liked,
             "likes":post.like.count(),
-            "post":serializer.data
         }, status=status.HTTP_200_OK)
