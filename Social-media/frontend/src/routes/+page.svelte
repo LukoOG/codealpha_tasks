@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Postcard from "$lib/components/postcard.svelte"
+	import Postcard from "$lib/components/postcard.svelte";
+	import ComposePost from "$lib/components/composePost.svelte";
 	
 	let { data } = $props()
-	let { posts } = data
+	let { posts, user } = $derived(data)
 	
 </script>
 
@@ -10,6 +11,10 @@
 	<div class="sticky top-0 z-10 bg-background/95 backdrop-blur border-b p-4">
 		<h1 class="text-xl font-bold">Home</h1>
 	</div>
+	
+	{#if user}
+		<ComposePost {user} />
+	{/if}
 	
 	<div class="divide-y divide-border">
 		{#each posts as post (post.id)}

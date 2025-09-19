@@ -5,7 +5,7 @@ export const load = async ({ cookies, fetch }) => {
 	const res = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/`, {
 		headers:{
 			"Access-Control-Allow-Origin":"127.0.0.1:8000",
-			"Authorization": `Bearer ${access}`,
+			"Authorization": access ? `Bearer ${access}` : "",
 			
 		}
 	})

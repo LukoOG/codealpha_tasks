@@ -1,15 +1,28 @@
 <script lang="ts">
 	import { Calendar, MapPin, Smile, ImageIcon } from "@lucide/svelte"
 	import Button from "$lib/components/ui/button.svelte"
+	import Textarea from "$lib/components/ui/textarea.svelte"
+	import Input from "$lib/components/ui/input.svelte"
+	
+	import { Avatar } from "bits-ui";
+	import { PUBLIC_BACKEND_URL } from "$env/static/public";
+	
+	let { user } = $props()
+	
+	let isOverLimit =$state(false)
+	let isNearLimit =$state(false)
+	let content =$state("asa")
+	
+	const maxChars = 100
 </script>
 
 <section class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none">
   <div class="p-6 pt-0 p-4">
     <div class="flex space-x-3">
-      <Avatar class="h-12 w-12">
-        <AvatarImage src="/placeholder-avatar.jpg" />
-        <AvatarFallback>YU</AvatarFallback>
-      </Avatar>
+          <Avatar.Root class="h-24 w-24">
+            <Avatar.Image class="aspect-square h-full w-full" src="{PUBLIC_BACKEND_URL}/{user.media}" />
+            <Avatar.Fallback class="flex h-12 w-12 items-center justify-center rounded-full bg-muted aspect-square">{user.username[0].toUpperCase()}</Avatar.Fallback>
+          </Avatar.Root>
 
       <div class="flex-1 space-y-4">
         <Textarea
@@ -37,7 +50,7 @@
           </div>
 
           <div class="flex items-center space-x-3">
-            {content.length > 0 && (
+            {#if true}
               <div class="flex items-center space-x-2">
                 <div class="relative w-8 h-8">
                   <svg class="w-8 h-8 transform -rotate-90" viewBox="0 0 36 36">
@@ -56,18 +69,17 @@
                     />
                   </svg>
                 </div>
-                {isNearLimit && (
+                {#if isNearLimit}
                   <span class={`text-sm ${isOverLimit ? 'text-destructive' : 'text-yellow-600'}`}>
-                    {remainingChars}
+                    2
                   </span>
-                )}
+                {/if}
               </div>
-            )}
+            {/if}
 
             <Button 
               variant="social" 
               size="sm"
-              onClick={handlePost}
               disabled={!content.trim() || isOverLimit}
               class="px-6"
             >
