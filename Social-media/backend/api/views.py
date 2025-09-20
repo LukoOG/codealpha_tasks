@@ -50,6 +50,15 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(user_profile, context={"request":request})
         return Response({ "following":following, "follows":user_profile_follows }, status=status.HTTP_200_OK)
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(
+            data=request.data,
+            context={"request":request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.perform_create(serializer)
+        return Response( serializer.data,status=status.HTTP_201_CREATED)
         
     @action(detail=True, methods=["get"])
     def following(self, request, username=None):
