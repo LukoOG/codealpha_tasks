@@ -20,7 +20,7 @@
 		goto(`/profile/${username}`, { invalidateAll: true });
 	}
 	
-	let followerCount = $state<number>(userData.followers)
+	let followerCount = $derived<number>(userData.followers)
 	
 	const handleFollowEnhance = async () => {
 		return async ({ result, update }) => {

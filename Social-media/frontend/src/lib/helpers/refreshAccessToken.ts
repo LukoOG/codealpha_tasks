@@ -16,8 +16,6 @@ export default async function refreshAccessToken(event: any) {
 	  credentials: "include"
     });
 	
-	console.log(res)
-	
     if (!res.ok) throw new Error("Failed to refresh access token");
     const data = await res.json();
 

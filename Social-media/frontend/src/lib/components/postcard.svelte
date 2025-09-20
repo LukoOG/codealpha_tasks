@@ -10,7 +10,7 @@
 	let isLiked = $state<boolean>(post.isLiked)
 	let likesCount = $state<number>(post.likesCount)
 	
-	$inspect(isLiked)
+	//$inspect(isLiked)
 	
 	const handleReply = () => {}
 	const handleLike = () => {}

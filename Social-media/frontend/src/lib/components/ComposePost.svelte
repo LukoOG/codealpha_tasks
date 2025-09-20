@@ -9,28 +9,28 @@
 	
 	let { user } = $props()
 	
-	let isOverLimit =$state(false)
-	let isNearLimit =$state(false)
-	let content =$state("asa")
-	
 	const maxChars = 100
+	let content =$state("")
+	const remainingChars = $derived(maxChars - content.length)
+	let isOverLimit =$derived(remainingChars < 0)
+	let isNearLimit =$derived(remainingChars <= 20)
+	let progress = $derived(Math.min((content.length / maxChars) * 100, 100))
 </script>
 
 <section class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none">
-  <div class="p-6 pt-0 p-4">
+  <div class="p-6">
     <div class="flex space-x-3">
-          <Avatar.Root class="h-24 w-24">
-            <Avatar.Image class="aspect-square h-full w-full" src="{PUBLIC_BACKEND_URL}/{user.media}" />
+          <Avatar.Root class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+            <Avatar.Image class="aspect-square h-full w-full" src="{PUBLIC_BACKEND_URL}/{user.avatar}" />
             <Avatar.Fallback class="flex h-12 w-12 items-center justify-center rounded-full bg-muted aspect-square">{user.username[0].toUpperCase()}</Avatar.Fallback>
           </Avatar.Root>
 
       <div class="flex-1 space-y-4">
         <Textarea
           placeholder="What's happening?"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          bind:value={content}
           class="border-0 resize-none text-xl placeholder:text-muted-foreground focus-visible:ring-0 p-0 min-h-[60px]"
-          style={{ boxShadow: 'none' }}
+          style="box-shadow: none;"
         />
 
         <div class="flex items-center justify-between">
@@ -52,26 +52,31 @@
           <div class="flex items-center space-x-3">
             {#if true}
               <div class="flex items-center space-x-2">
-                <div class="relative w-8 h-8">
-                  <svg class="w-8 h-8 transform -rotate-90" viewBox="0 0 36 36">
-                    <path
-                      class="stroke-current text-muted-foreground/20"
-                      strokeWidth="3"
-                      fill="none"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                    <path
-                      class={`stroke-current ${isOverLimit ? 'text-destructive' : isNearLimit ? 'text-yellow-500' : 'text-social-blue'}`}
-                      strokeWidth="3"
-                      fill="none"
-                      strokeDasharray={`${Math.min((content.length / maxChars) * 100, 100)}, 100`}
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                  </svg>
-                </div>
+				<div class="relative w-8 h-8">
+				  <svg class="w-8 h-8 transform -rotate-90" viewBox="0 0 36 36">
+					<!-- Background circle -->
+					<path
+					  class="stroke-current text-muted-foreground/20"
+					  stroke-width="4"
+					  fill="none"
+					  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+					/>
+					<!-- Progress circle -->
+					<path
+					  class="stroke-current"
+					  class:text-destructive={isOverLimit}
+					  class:text-yellow-500={isNearLimit && !isOverLimit}
+					  class:text-social-blue={!isNearLimit && !isOverLimit}
+					  stroke-width="4"
+					  fill="none"
+					  stroke-dasharray="{progress}, 100"
+					  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+					/>
+				  </svg>
+				</div>
                 {#if isNearLimit}
-                  <span class={`text-sm ${isOverLimit ? 'text-destructive' : 'text-yellow-600'}`}>
-                    2
+                  <span class="text-sm {isOverLimit ? 'text-destructive' : 'text-yellow-600'}">
+                    {remainingChars}
                   </span>
                 {/if}
               </div>

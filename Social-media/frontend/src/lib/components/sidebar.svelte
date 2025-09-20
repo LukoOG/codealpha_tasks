@@ -18,7 +18,6 @@
 	
 	let { user } = $props();
 	let isAuthenticated = $derived.by(()=>user ? true : false)
-	$inspect(user?.username)
 	
 	function getNavCls(isActive: boolean) {
 		return isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";

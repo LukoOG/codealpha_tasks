@@ -10,7 +10,7 @@ export const load = async ({ cookies, parent, params, fetch, locals }) => {
 	const postRes = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/?username=${params.username}`)
 	const userRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}`,{
 		headers:{
-			"Authorization":`Bearer ${access}`
+			"Authorization": access ? `Bearer ${access}` : "",
 		}
 	})
 	const followersRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/following/`)

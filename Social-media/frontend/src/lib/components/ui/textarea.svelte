@@ -1,6 +1,6 @@
 <script lang="ts">
 	interface textareaProps{
-		className: string,
+		class: string,
 		value: string | undefined,
 		placeholder: string | undefined,
 		name: string | undefined,
@@ -14,7 +14,7 @@
   
   let {
 	class: className = "",
-	value,
+	value = $bindable(),
 	placeholder,
 	name,
 	id,
