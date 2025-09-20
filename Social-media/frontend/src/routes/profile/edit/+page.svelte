@@ -16,7 +16,7 @@
 	
 	let imageInput = $state()
 	
-	let previewUrl = $state<string|null>(null);
+	let previewUrl = $state<string|null>(userData.profile_pic);
 
 	function handleFileChange(event: Event) {
 		const file = (event.target as HTMLInputElement).files?.[0];
@@ -67,7 +67,7 @@
 			<!-- Avatar Section -->
 			<div class="flex items-center gap-4">
 				<Avatar.Root class="h-20 w-20">
-					<Avatar.Image class="aspect-square h-full w-full" src={userData.profile_pic} alt="swix {userData.username}" />
+					<Avatar.Image class="aspect-square h-full w-full" src={previewUrl} alt="swix {userData.username}" />
 					<Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square text-2xl">A</Avatar.Fallback>
 				</Avatar.Root>
 				<input

@@ -4,10 +4,15 @@
 	import Textarea from "$lib/components/ui/textarea.svelte"
 	import Input from "$lib/components/ui/input.svelte"
 	
+	import { enhance } from "$app/forms";
+	
 	import { Avatar } from "bits-ui";
 	import { PUBLIC_BACKEND_URL } from "$env/static/public";
 	
 	let { user } = $props()
+	
+	let fileInput = $state()
+	let file = $state()
 	
 	const maxChars = 100
 	let content =$state("")
@@ -15,6 +20,14 @@
 	let isOverLimit =$derived(remainingChars < 0)
 	let isNearLimit =$derived(remainingChars <= 20)
 	let progress = $derived(Math.min((content.length / maxChars) * 100, 100))
+	
+	function handleFileChange(event: Event) {
+
+	}
+	
+	function handleEnhance(){
+		console.log("form submit")
+	}
 </script>
 
 <section class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none">
@@ -35,9 +48,16 @@
 
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" class="h-9 w-9 text-social-blue hover:bg-social-blue/10">
-              <ImageIcon class="h-5 w-5" />
-            </Button>
+		  
+			<form id="postForm" method="POST" action="/api/posts" enctype="multipart/form-data" use:enhance={handleEnhance}>
+				<Button onclick={()=>fileInput.click()} variant="ghost" size="icon" class="h-9 w-9 text-social-blue hover:bg-social-blue/10">
+					<ImageIcon  class="h-5 w-5" />
+				  <input bind:this={fileInput} name="image" class="hidden" type="file" onchange={handleFileChange} />
+				  <input bind:value={content} name="content" class="hidden" type="text">
+				</Button>
+			</form>
+			
+			
             <Button variant="ghost" size="icon" class="h-9 w-9 text-social-blue hover:bg-social-blue/10">
               <MapPin class="h-5 w-5" />
             </Button>
@@ -87,6 +107,8 @@
               size="sm"
               disabled={!content.trim() || isOverLimit}
               class="px-6"
+			  type="submit"
+			  form="postForm"
             >
               Post
             </Button>
