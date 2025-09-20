@@ -9,10 +9,11 @@
 	import { Avatar } from "bits-ui";
 	import { PUBLIC_BACKEND_URL } from "$env/static/public";
 	
-	let { user } = $props()
+	let { user, addPost } = $props()
 	
 	let fileInput = $state()
 	let file = $state()
+	//let newPost = $state(null)
 	
 	const maxChars = 100
 	let content =$state("")
@@ -26,7 +27,14 @@
 	}
 	
 	function handleEnhance(){
-		console.log("form submit")
+		return async ({ update, result }) => {
+			await update()
+			addPost(result)
+			
+			//clear values
+			content = ""
+			file = null
+		}
 	}
 </script>
 
@@ -52,7 +60,7 @@
 			<form id="postForm" method="POST" action="/api/posts" enctype="multipart/form-data" use:enhance={handleEnhance}>
 				<Button onclick={()=>fileInput.click()} variant="ghost" size="icon" class="h-9 w-9 text-social-blue hover:bg-social-blue/10">
 					<ImageIcon  class="h-5 w-5" />
-				  <input bind:this={fileInput} name="image" class="hidden" type="file" onchange={handleFileChange} />
+				  <input bind:this={fileInput} name="media" class="hidden" type="file" onchange={handleFileChange} />
 				  <input bind:value={content} name="content" class="hidden" type="text">
 				</Button>
 			</form>

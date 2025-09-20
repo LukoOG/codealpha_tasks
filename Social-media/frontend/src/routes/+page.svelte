@@ -3,7 +3,9 @@
 	import ComposePost from "$lib/components/composePost.svelte";
 	
 	let { data } = $props()
-	let { posts, user } = $derived(data)
+	let { posts: p, user } = $derived(data)
+	
+	let posts = $state([...p]);
 	
 </script>
 
@@ -13,7 +15,7 @@
 	</div>
 	
 	{#if user}
-		<ComposePost {user} />
+		<ComposePost addPost={(post)=>{console.log('adding');posts = [post, ...posts]}} {user} />
 	{/if}
 	
 	<div class="divide-y divide-border">
