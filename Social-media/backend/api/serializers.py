@@ -24,13 +24,14 @@ class AuthorSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(source="user", read_only=True)
     content = serializers.CharField(source="message")
-    created_at = serializers.DateTimeField(source="date", format="%Y-%m-%dT%H:%M:%SZ")
+    created_at = serializers.DateTimeField(source="date", format="%Y-%m-%dT%H:%M:%SZ", read_only=True)
     likesCount = serializers.SerializerMethodField()
     repostsCount = serializers.SerializerMethodField()
     repliesCount = serializers.SerializerMethodField()
     isLiked = serializers.SerializerMethodField()
     isReposted = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
+    media = serializers.FileField(write_only=True, required=False)
     class Meta:
         model = Post
         fields = [
@@ -44,7 +45,9 @@ class PostSerializer(serializers.ModelSerializer):
             "isLiked",
             "isReposted",
             "image",
+            "media",
         ]
+        read_only_fields = ["created_at"]
     def create(self, validated_data):
         request = self.context.get("request")
         validated_data["user"] = request.user
