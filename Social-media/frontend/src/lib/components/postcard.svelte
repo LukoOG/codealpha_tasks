@@ -23,8 +23,8 @@
 			await update();
 
 			const { liked, likes } = result
-			isLiked = liked
-			likesCount = likes
+			isLiked = liked ?? isLiked
+			likesCount = likes ?? likesCount
 		}
 	}
 </script>
