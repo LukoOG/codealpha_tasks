@@ -1,7 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
 from faker import Faker
-from myapp.models import Restaurant, Product
+from api.models import Restaurant, Product
 from django.core.files import File
 from pathlib import Path
 
