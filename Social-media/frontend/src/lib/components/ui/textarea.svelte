@@ -7,6 +7,7 @@
 		id: string | undefined,
 		disabled: boolean,
 		rows: number | undefined,
+		style: string,
 	}
   // forward reference to the raw DOM element
   //let textareaEl: HTMLTextAreaElement;
@@ -21,7 +22,7 @@
 	disabled = false,
 	rows,
 	...others
-  }: textareaProps = $props()
+  }: Partial<textareaProps> = $props()
 </script>
 
 <textarea

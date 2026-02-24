@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import { BACKEND_URL } from "$env/static/private"
 import { json } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ params, cookies }) => {
@@ -8,7 +8,7 @@ export const POST: RequestHandler = async ({ params, cookies }) => {
         return new Response(JSON.stringify({ error: "Not authenticated" }), { status: 401 });
     }
 
-    const res = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/${params.id}/toggle_like/`, {
+    const res = await fetch(`${BACKEND_URL}/api/posts/${params.id}/toggle_like/`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${access}`,
@@ -33,7 +33,7 @@ export const DELETE: RequestHandler = async ({ params, cookies }) => {
         return new Response(JSON.stringify({ error: "Not authenticated" }), { status: 401 });
     }
 
-    const res = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/${params.id}/like/`, {
+    const res = await fetch(`${BACKEND_URL}/api/posts/${params.id}/like/`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${access}`,

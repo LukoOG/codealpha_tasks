@@ -2,7 +2,7 @@
 	import { tv } from 'tailwind-variants';
 	import type { Snippet } from 'svelte';
 
-	type variantType = "default" | "outline" | "secondary" | "ghost" | "link";
+	type variantType = "default" | "outline" | "secondary" | "ghost" | "link" | "social";
 	type sizeType = "default" | "sm" | "lg" | "icon";
 	type buttonType = "button" | "submit" | "reset";
 	
@@ -11,8 +11,10 @@
 		size: sizeType,
 		class: string,
 		type: buttonType,
-		disabled: boolean,
+		disabled?: boolean,
+    form?: string,
 		children: Snippet,
+    onclick?: () => void | unknown | null,
 	}
 	
 	let { 
@@ -22,7 +24,7 @@
 		class: className="",
 		disabled = false,
 		children, ...others
-	}: buttonProps = $props()
+  }: Partial<buttonProps> = $props()
 
   const button = tv({
     base: "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",

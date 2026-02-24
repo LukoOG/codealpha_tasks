@@ -1,4 +1,4 @@
-import { PUBLIC_BACKEND_URL } from "$env/static/public";
+import { BACKEND_URL } from "$env/static/private"
 import type { Actions } from "./$types";
 
 
@@ -7,13 +7,13 @@ import type { Actions } from "./$types";
 export const load = async ({ cookies, parent, params, fetch, locals }) => {
 	const access = cookies.get("accessToken");
 	//TODO: combine both endpoints into 1
-	const postRes = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/?username=${params.username}`)
-	const userRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}`,{
+	const postRes = await fetch(`${BACKEND_URL}/api/posts/?username=${params.username}`)
+	const userRes = await fetch(`${BACKEND_URL}/api/users/${params.username}`,{
 		headers:{
 			"Authorization": access ? `Bearer ${access}` : "",
 		}
 	})
-	const followersRes = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/following/`)
+	const followersRes = await fetch(`${BACKEND_URL}/api/users/${params.username}/following/`)
 	
 	if (postRes.ok && userRes.ok){
 		const postData = await postRes.json()
@@ -36,7 +36,7 @@ export const actions: Actions = {
             return { error: "Not authenticated" };
         }
 
-        const res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${params.username}/toggle_follow/`, {
+        const res = await fetch(`${BACKEND_URL}/api/users/${params.username}/toggle_follow/`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${access}`,

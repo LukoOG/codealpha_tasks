@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { splitCookiesString, parse } from 'set-cookie-parser';
 import type { Actions } from '@sveltejs/kit';
-import { PUBLIC_BACKEND_URL } from "$env/static/public";
+import { BACKEND_URL } from "$env/static/private"
 
 export const load = ({ locals }) => {
     if (locals.user){
@@ -16,7 +16,7 @@ export const actions: Actions = {
         const password = formData.get("password")
 
         const res = await fetch(
-            `${PUBLIC_BACKEND_URL}/api/auth/login`,
+            `${BACKEND_URL}/api/auth/login`,
             {
                 method: "POST",
                 headers: {
@@ -58,7 +58,7 @@ export const actions: Actions = {
         const password = data.get("password")
         
         const res = await fetch(
-            `${PUBLIC_BACKEND_URL}/api/auth/register`,
+            `${BACKEND_URL}/api/auth/register`,
             {
                 method: "POST",
                 headers: {

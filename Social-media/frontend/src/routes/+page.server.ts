@@ -1,8 +1,8 @@
-import { PUBLIC_BACKEND_URL } from "$env/static/public"
+import { BACKEND_URL } from "$env/static/private"
 
 export const load = async ({ cookies, fetch }) => {
 	const access = cookies.get("accessToken");
-	const res = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/`, {
+	const res = await fetch(`${BACKEND_URL}/api/posts/`, {
 		headers:{
 			"Access-Control-Allow-Origin":"127.0.0.1:8000",
 			"Authorization": access ? `Bearer ${access}` : "",

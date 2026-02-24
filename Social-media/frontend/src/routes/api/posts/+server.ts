@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import { BACKEND_URL } from "$env/static/private"
 import { json, redirect } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ params, cookies, request }) => {
@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ params, cookies, request }) => {
 	const formData = await request.formData()
 	//console.log(formData)
 
-    const res = await fetch(`${PUBLIC_BACKEND_URL}/api/posts/`, {
+    const res = await fetch(`${BACKEND_URL}/api/posts/`, {
         method: "POST",
         headers: {
             "Authorization": access ? `Bearer ${access}` : ""

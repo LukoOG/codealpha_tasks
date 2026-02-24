@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Postcard from "$lib/components/postcard.svelte";
-	import ComposePost from "$lib/components/composePost.svelte";
+	import ComposePost from "$lib/components/ComposePost.svelte";
 	
 	let { data } = $props()
 	let { posts: p, user } = $derived(data)

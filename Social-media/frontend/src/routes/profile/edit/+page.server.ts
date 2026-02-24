@@ -1,4 +1,4 @@
-import { PUBLIC_BACKEND_URL } from "$env/static/public"
+import { BACKEND_URL } from "$env/static/private"
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
@@ -10,7 +10,7 @@ export const load = async ({cookies, fetch, parent }) => {
 
 	try{
 
-		let res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/me/`,{
+		let res = await fetch(`${BACKEND_URL}/api/users/me/`,{
 			headers:{
 				"Authorization": `Bearer ${cookies.get("accessToken")}`
 			}
@@ -51,7 +51,7 @@ export const actions: Actions = {
 
     try {
       // 3. Send PATCH request to Django
-      const res = await fetch(`${PUBLIC_BACKEND_URL}/api/users/${locals.user.username}/`, {
+      const res = await fetch(`${BACKEND_URL}/api/users/${locals.user.username}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
