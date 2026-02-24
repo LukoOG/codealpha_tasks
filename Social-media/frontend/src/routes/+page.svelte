@@ -6,6 +6,7 @@
 	let { posts: p, user } = $derived(data)
 	
 	let posts = $state([...p]);
+	$inspect(posts)
 	
 </script>
 

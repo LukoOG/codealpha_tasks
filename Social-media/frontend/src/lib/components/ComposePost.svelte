@@ -42,8 +42,8 @@
   <div class="p-6">
     <div class="flex space-x-3">
           <Avatar.Root class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-            <Avatar.Image class="aspect-square h-full w-full" src="{PUBLIC_BACKEND_URL}/{user.avatar}" />
-            <Avatar.Fallback class="flex h-12 w-12 items-center justify-center rounded-full bg-muted aspect-square">{user.username[0].toUpperCase()}</Avatar.Fallback>
+            <Avatar.Image class="aspect-square h-full w-full" src={PUBLIC_BACKEND_URL + user.avatar} />
+            <Avatar.Fallback class="flex h-12 w-12 items-center justify-center rounded-full bg-muted aspect-square">{"asad".toUpperCase()}</Avatar.Fallback>
           </Avatar.Root>
 
       <div class="flex-1 space-y-4">
