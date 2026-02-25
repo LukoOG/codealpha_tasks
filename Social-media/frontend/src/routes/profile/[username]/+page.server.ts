@@ -8,7 +8,7 @@ export const load = async ({ cookies, parent, params, fetch, locals }) => {
 	const access = cookies.get("accessToken");
 	//TODO: combine both endpoints into 1
 	const postRes = await fetch(`${BACKEND_URL}/api/posts/?username=${params.username}`)
-	const userRes = await fetch(`${BACKEND_URL}/api/users/${params.username}`,{
+	const userRes = await fetch(`${BACKEND_URL}/api/users/${params.username}/`,{
 		headers:{
 			"Authorization": access ? `Bearer ${access}` : "",
 		}

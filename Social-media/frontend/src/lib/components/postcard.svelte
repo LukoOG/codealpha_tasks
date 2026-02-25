@@ -78,7 +78,7 @@
 				</div>
 
 				<div class="mt-2 space-y-3">
-				  <p class="text-foreground whitespace-pre-wrap leading-relaxed">{post.content}</p>
+				  <p class="text-foreground whitespace-pre-wrap break-words leading-relaxed">{post.content}</p>
 				  
 				  {#if post.image}
 					<div class="rounded-2xl overflow-hidden border border-border">

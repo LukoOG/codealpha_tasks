@@ -23,6 +23,7 @@
 	rows,
 	...others
   }: Partial<textareaProps> = $props()
+  $inspect(value)
 </script>
 
 <textarea

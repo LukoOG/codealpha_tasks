@@ -45,7 +45,7 @@
 				class="flex items-center space-x-3 p-3 hover:bg-secondary rounded-lg transition-all duration-200"
 			>
 				<img
-					src="{PUBLIC_BACKEND_URL + user.avatar}"
+					src="{user.avatar}"
 					alt="Profile"
 					class="h-10 w-10 rounded-full object-cover"
 				/>
