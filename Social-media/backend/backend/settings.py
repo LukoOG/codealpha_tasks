@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["codealpha-tasks-oyzj.onrender.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["codealpha-tasks-oyzj.onrender.com"]
 
 
 # Application definition
@@ -98,6 +98,11 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = ("http://localhost:5173", "https://swix-lake.vercel.app",)
 CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://swix-lake.vercel.app",
+    "http://localhost:5173",
+]
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -254,8 +259,6 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
