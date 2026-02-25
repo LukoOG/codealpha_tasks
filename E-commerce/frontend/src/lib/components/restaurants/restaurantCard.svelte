@@ -1,16 +1,25 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-
+	import fallback from "$lib/assets/fallback.jpeg"
 	let { url, restaurant } = $props()
 </script>
 
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div onkeydown={undefined} onclick={()=>goto(`restaurants/${restaurant.id}`)} class="bg-card rounded-lg overflow-hidden border border-border cursor-pointer transition-all hover:shadow-lg">
 	<div class="aspect-video overflow-hidden">
+	{#if restaurant.img}
 		<img
 		  src={url}
 		  alt={restaurant.name}
 		  class="w-full h-full object-cover transition-transform hover:scale-105"
 		/>
+		{:else}
+				<img
+		  src={fallback}
+		  alt={restaurant.name}
+		  class="w-full h-full object-cover transition-transform hover:scale-105"
+		/>
+		{/if}
 	</div>
               
 	<div class="p-6">
