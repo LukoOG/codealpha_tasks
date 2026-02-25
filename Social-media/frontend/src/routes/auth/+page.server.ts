@@ -16,7 +16,7 @@ export const actions: Actions = {
         const password = formData.get("password")
 
         const res = await fetch(
-            `${BACKEND_URL}/api/auth/login`,
+            `${BACKEND_URL}/api/auth/login/`,
             {
                 method: "POST",
                 headers: {
@@ -58,7 +58,7 @@ export const actions: Actions = {
         const password = data.get("password")
         
         const res = await fetch(
-            `${BACKEND_URL}/api/auth/register`,
+            `${BACKEND_URL}/api/auth/register/`,
             {
                 method: "POST",
                 headers: {

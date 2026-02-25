@@ -60,7 +60,7 @@
       <div class="p-6 border-b">
         <div class="flex items-start justify-between mb-4">
           <Avatar.Root class="h-24 w-24">
-            <Avatar.Image class="aspect-square h-full w-full" src={userData.avatar} />
+            <Avatar.Image class="aspect-square h-full w-full" src={userData.profile_pic} />
             <Avatar.Fallback class="flex h-full w-full items-center justify-center rounded-full bg-muted aspect-square text-2xl">{userData.name[0]}</Avatar.Fallback>
           </Avatar.Root>
 		  
