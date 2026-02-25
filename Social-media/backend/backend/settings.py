@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'cloudinary',
+    'cloudinary_storage'
 ]
 
 REST_FRAMEWORK = {
