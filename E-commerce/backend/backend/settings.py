@@ -54,6 +54,11 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = ("http://localhost:5173", "https://svellit-diamond.vercel.app",)
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://swix-lake.vercel.app",
+    "http://localhost:5173",
+]
+
 ROOT_URLCONF = "backend.urls"
 
 TEMPLATES = [
