@@ -96,7 +96,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-CORS_ALLOWED_ORIGINS = ("http://localhost:5173", "https://swix-lake.vercel.app/",)
+CORS_ALLOWED_ORIGINS = ("http://localhost:5173", "https://swix-lake.vercel.app",)
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'backend.urls'
