@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Calendar, MapPin, Smile, ImageIcon } from "@lucide/svelte"
+	import { Calendar, MapPin, Smile, ImageIcon, X} from "@lucide/svelte"
 	import Button from "$lib/components/ui/button.svelte"
 	import Textarea from "$lib/components/ui/textarea.svelte"
 	import Input from "$lib/components/ui/input.svelte"
@@ -16,15 +16,11 @@
 	//let newPost = $state(null)
 	
 	const maxChars = 100
-	let content =$state("")
+	let content =$state<string>("")
 	const remainingChars = $derived(maxChars - content.length)
 	let isOverLimit =$derived(remainingChars < 0)
 	let isNearLimit =$derived(remainingChars <= 20)
 	let progress = $derived(Math.min((content.length / maxChars) * 100, 100))
-	
-	function handleFileChange(event: Event) {
-
-	}
 	
 	function handleEnhance(){
 		return async ({ update, result }) => {
@@ -34,8 +30,38 @@
 			//clear values
 			content = ""
 			file = null
+      removeImage()
 		}
 	}
+
+	let imagePreview = $state<string | null>(null);
+
+function handleFileChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  
+  // Revoke previous URL to avoid memory leaks
+  if (imagePreview) {
+    URL.revokeObjectURL(imagePreview);
+  }
+
+  if (file) {
+    imagePreview = URL.createObjectURL(file);
+  } else {
+    imagePreview = null;
+  }
+}
+
+function removeImage() {
+  if (imagePreview) {
+    URL.revokeObjectURL(imagePreview);
+    imagePreview = null;
+  }
+  // Clear the file input so the same file can be re-selected if needed
+  if (fileInput) {
+    fileInput.value = '';
+  }
+}
 </script>
 
 <section class="rounded-lg border bg-card text-card-foreground shadow-sm border-0 border-b rounded-none">
@@ -53,6 +79,20 @@
           class="border-0 resize-none text-xl placeholder:text-muted-foreground focus-visible:ring-0 p-0 min-h-[60px]"
           style="box-shadow: none;"
         />
+
+                <!-- Image Preview -->
+        {#if imagePreview}
+          <div class="relative rounded-xl overflow-hidden border">
+            <img src={imagePreview} alt="Upload preview" class="w-full max-h-80 object-cover" />
+            <button
+              onclick={removeImage}
+              class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1 transition-colors"
+              aria-label="Remove image"
+            >
+              <X class="h-4 w-4" />
+            </button>
+          </div>
+        {/if}
 
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
