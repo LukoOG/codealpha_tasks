@@ -9,6 +9,7 @@ router.register(r'posts', views.PostViewSet, basename="post")
 urlpatterns = [
     #path('', views.index, name=""),
     #auth routes
+    path('auth/csrf', auth.get_csrf),
     path('auth/register', auth.RegisterView.as_view(), name='register'),
     path('auth/login', auth.LoginTokenObtainPairView.as_view(), name='login'),
     path("auth/logout", auth.LogoutView.as_view(), name="logout"),

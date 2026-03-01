@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
 
 from .serializers import RegisterUserSerializer
 
@@ -93,3 +95,8 @@ class LogoutView(APIView):
         response.delete_cookie("accessToken")
         response.delete_cookie("refreshToken")
         return response
+
+
+@ensure_csrf_cookie
+def get_csrf(request):
+    return JsonResponse({"detail": "CSRF cookie set"})
