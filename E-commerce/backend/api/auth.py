@@ -89,6 +89,15 @@ class CustomTokenRefreshView(TokenRefreshView):
 class LogoutView(APIView):
     def post(self, request):
         response = Response({"success": True})
-        response.delete_cookie("accessToken")
-        response.delete_cookie("refreshToken")
+        response.delete_cookie(
+            key="accessToken",
+            path="/",
+            samesite="None"
+        )
+
+        response.delete_cookie(
+            key="refreshToken",
+            path="/",
+            samesite="None"
+        )
         return response
