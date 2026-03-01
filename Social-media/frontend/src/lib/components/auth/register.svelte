@@ -29,12 +29,12 @@
 
 <div class="space-y-2">
 	<Label.Root htmlFor="username">Username</Label.Root>
-	<Input id="username" type="text" placeholder="Choose a username" required />
+	<Input id="username" type="text" name="username" placeholder="Choose a username" required />
 </div>
 
 <div class="space-y-2">
 	<Label.Root htmlFor="register-email">Email</Label.Root>
-	<Input id="register-email" type="email" placeholder="Enter your email" required />
+	<Input id="register-email" name="email" type="email" placeholder="Enter your email" required />
 </div>
 
 <div class="space-y-2">
@@ -42,6 +42,7 @@
 	<div class="relative">
 		<Input
 			id="register-password"
+			name="password"
 			type={showPassword1 ? 'text' : 'password'}
 			placeholder="Create a password"
 			bind:value={password1}
@@ -72,6 +73,7 @@
 	<div class="relative">
 		<Input
 			id="confirm-password"
+			name="password2"
 			type={showPassword2 ? 'text' : 'password'}
 			placeholder="Confirm your password"
 			bind:value={password2}

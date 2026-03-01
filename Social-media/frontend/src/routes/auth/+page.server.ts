@@ -16,7 +16,7 @@ export const actions: Actions = {
         const password = formData.get("password")
 
         const res = await fetch(
-            `${BACKEND_URL}/api/auth/login/`,
+            `${BACKEND_URL}/api/auth/login`,
             {
                 method: "POST",
                 headers: {
@@ -55,26 +55,42 @@ export const actions: Actions = {
     register: async ({ request, fetch, cookies }) => {
         const data = await request.formData();
         const email = data.get("email")
+        const username = data.get("username")
         const password = data.get("password")
+        console.log(email, username, password)
         
         const res = await fetch(
-            `${BACKEND_URL}/api/auth/register/`,
+            `${BACKEND_URL}/api/auth/register`,
             {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json"
                 },
-                body:JSON.stringify({email, password}),
+                body:JSON.stringify({email, password, username}),
                 credentials: "include",
             }
         )
-		
+
+        const rawCookies = res.headers.get("set-cookie");
+		if(rawCookies){
+			const cookiesArray = parse(splitCookiesString(rawCookies));
+			for (const c of cookiesArray){
+				cookies.set(c.name, c.value, {
+					httpOnly: c.httpOnly ?? true,
+					secure: c.secure,
+					sameSite: (c.sameSite?.toLowerCase() as 'lax' | 'strict' | 'none') ?? 'lax',
+					path: c.path ?? "/",
+					...(c.maxAge ? { maxAge : c.maxAge} : {}),
+					...(c.expires ? { expires: new Date(c.expires) } : {}),
+				})
+			}
+		}
 		
         if(!res.ok){
             const error = await res.json().catch(() => ({}));
             return fail(res.status, { error });
         }
 
-        throw redirect(303, '/auth')
+        throw redirect(303, '/')
     }
 }

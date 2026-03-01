@@ -1,13 +1,13 @@
 <script lang="ts">
 	interface inputProps{
 		type: string,
-		className: string,
-		value: string | number | undefined,
-		disabled: boolean,
-		placeholder: string,
+		className?: string,
+		value?: string | number | undefined,
+		disabled?: boolean,
+		placeholder?: string,
 		name: string,
 		id: string,
-		required: boolean,
+		required?: boolean,
 	}
   
   let {
