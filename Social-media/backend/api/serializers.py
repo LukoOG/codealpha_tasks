@@ -76,7 +76,9 @@ class PostSerializer(serializers.ModelSerializer):
         return None
         
 class RegisterUserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=True)
+    email = serializers.EmailField(required=True)
+    username = serializers.CharField(required=True)
 
     class Meta:
         model = user

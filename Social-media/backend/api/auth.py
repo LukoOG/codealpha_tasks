@@ -23,6 +23,13 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = RegisterUserSerializer
 
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print("Serializer errors:", serializer.errors)
+            return Response({"errors": serializer.errors}, status=400)
+        return super().post(request, *args, **kwargs)
+
 
 class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
