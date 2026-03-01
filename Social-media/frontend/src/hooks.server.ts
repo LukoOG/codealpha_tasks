@@ -2,7 +2,7 @@ import type { Handle } from "@sveltejs/kit";
 import jwt from "jsonwebtoken"; 
 import { JWT_SECRET } from "$env/static/private"
 
-import refreshAccessToken from "$lib/helpers/refreshAccessToken.ts"
+import refreshAccessToken from "$lib/helpers/refreshAccessToken"
 
 export const handle: Handle = async ({ event, resolve }) => {
 	let access = event.cookies.get("accessToken");
