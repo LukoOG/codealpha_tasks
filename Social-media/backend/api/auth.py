@@ -28,6 +28,41 @@ class RegisterView(generics.CreateAPIView):
         if not serializer.is_valid():
             print("Serializer errors:", serializer.errors)
             return Response({"errors": serializer.errors}, status=400)
+        user = serializer.save()
+        
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+        
+        response = Response({
+            "success": True,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "username": user.username
+            }
+        }, status=status.HTTP_201_CREATED)
+        response.set_cookie(
+                key="accessToken",
+                value=access,
+                httponly=True,
+                secure=True,  
+                samesite="None",
+                max_age=60 * 15,
+            )
+            
+        response.set_cookie(
+                key="refreshToken",
+                value=refresh,
+                httponly=True,
+                secure=True,
+                samesite="None",
+                max_age=60 * 60 * 24 * 7,
+            )
+        
+        return response
+        
+        
         return super().post(request, *args, **kwargs)
 
 
