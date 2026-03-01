@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 	
-	import { logout } from "$lib/helpers/auth.ts"
+	import { logout } from "$lib/helpers/auth"
 	import { cartItemsCount} from "$lib/global/cache.svelte.ts";
     
     let { user } = $props()

@@ -4,8 +4,6 @@ export default async function refreshAccessToken(event: any) {
   const refresh = event.cookies.get("refreshToken");
   if (!refresh) return null;
   
-  console.log(refresh)
-
   try {
     const res = await fetch(`${PUBLIC_BACKEND_URL}/api/auth/token/refresh`, {
       method: "POST",
@@ -13,8 +11,7 @@ export default async function refreshAccessToken(event: any) {
       body: JSON.stringify({ refresh: refresh }),
 	  credentials:"include",
     });
-	
-	console.log(res)
+
 	
     if (!res.ok) throw new Error("Failed to refresh access token");
     const data = await res.json();
