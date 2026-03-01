@@ -44,7 +44,7 @@ class RegisterView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
         response.set_cookie(
                 key="accessToken",
-                value=access,
+                value=access_token,
                 httponly=True,
                 secure=True,  
                 samesite="None",
@@ -53,7 +53,7 @@ class RegisterView(generics.CreateAPIView):
             
         response.set_cookie(
                 key="refreshToken",
-                value=refresh,
+                value=refresh_token,
                 httponly=True,
                 secure=True,
                 samesite="None",
