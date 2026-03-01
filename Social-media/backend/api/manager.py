@@ -35,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(blank=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     website = models.CharField(max_length=100, blank=True, null=True)
-    profile_pic = models.ImageField(default="/default.jpeg", upload_to=user_directory_path, blank=True)
+    profile_pic = models.ImageField(default="https://res.cloudinary.com/dfxieiol1/image/upload/v1772399543/default_kscfdz.jpg", upload_to=user_directory_path, blank=True)
     follows = models.ManyToManyField('self',
                                         symmetrical=False,
                                         blank=True,
