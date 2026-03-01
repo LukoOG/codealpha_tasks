@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["codealpha-tasks-oyzj.onrender.com"]
 
@@ -103,10 +103,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://swix-lake.vercel.app",
     "http://localhost:5173",
 ]
-CSRF_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'backend.urls'
 
