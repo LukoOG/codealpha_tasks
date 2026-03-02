@@ -33,9 +33,14 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint for listing and retrieving restaurants
     """
-    queryset = Restaurant.objects.all()
+    queryset = Restaurant.objects.prefetch_related("categories__items")
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.AllowAny]
+    
+    def retrieve(self, request, *args, **kwargs):
+        restaurant = self.get_object()
+        serializer = RestaurantProductSerializer(restaurant)
+        return Response(serializer.data)
     
     @action(detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated])
     def toggle_favorite(self, request, pk=None):
