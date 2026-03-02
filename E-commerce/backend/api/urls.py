@@ -6,6 +6,7 @@ router = DefaultRouter()
 
 router.register(r'cart', views.CartViewSet, basename="cart")
 router.register(r'cart-items', views.CartItemViewSet, basename="cart-items")
+router.register(r'restaurants', views.RestaurantViewSet, basename="restaurant")
 
 urlpatterns = [
     path('', views.index, name=""),
@@ -15,9 +16,9 @@ urlpatterns = [
     path("auth/logout", auth.LogoutView.as_view(), name="logout"),
     path('auth/token/refresh', auth.CustomTokenRefreshView.as_view(), name="token_refresh"),
     
-    #view routes
-    path("restaurants/", views.RestaurantListView.as_view(), name="restaurant-list"),
-    path("restaurants/<int:pk>/", views.RestaurantDetailView.as_view(), name="restaurant-detail"),
+    # #view routes
+    # path("restaurants/", views.RestaurantListView.as_view(), name="restaurant-list"),
+    # path("restaurants/<int:pk>/", views.RestaurantDetailView.as_view(), name="restaurant-detail"),
     
     path("", include(router.urls)),
 ]

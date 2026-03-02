@@ -63,8 +63,6 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 class RestaurantSerializer(serializers.ModelSerializer):
     is_favorite = serializers.SerializerMethodField()
-    image = serializers.SerializerMethodField()
-    banner = serializers.SerializerMethodField()
     
     class Meta:
         model = Restaurant
@@ -79,10 +77,6 @@ class RestaurantSerializer(serializers.ModelSerializer):
         if user.is_authenticated:
             return obj.favorites.filter(id=user.id).exists()
         return False
-    def get_image(self, obj):
-        return staticfiles_storage.url(obj.image.url) if obj.image else None
-    def get_banner(self, obj):
-        return staticfiles_storage.url(obj.banner.url) if obj.banner else None
       
 class RestaurantListSerializer(serializers.ModelSerializer):
     class Meta:

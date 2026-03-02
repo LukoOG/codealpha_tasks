@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 # urls the backend can be hosted on
 ALLOWED_HOSTS = ["svellit-backend.onrender.com"]
@@ -58,6 +58,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://swix-lake.vercel.app",
     "http://localhost:5173",
 ]
+#provisional
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = "backend.urls"
 
