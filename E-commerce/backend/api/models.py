@@ -11,7 +11,7 @@ def restaurant_path(instance, filename):
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=restaurant_path, blank=True, null=True)
-    banner = models.ImageField(default="/banner.jpeg", upload_to=restaurant_path, blank=True)
+    banner = models.ImageField(default="https://res.cloudinary.com/dfxieiol1/image/upload/v1772479968/patrick-tomasso-GXXYkSwndP4-unsplash_ph02x3.jpg", upload_to=restaurant_path, blank=True)
     description = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     
