@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { onMount } from 'svelte';
-	import sleep from "$lib/helpers/sleep.ts";
+	import sleep from "$lib/helpers/sleep";
 
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
@@ -9,14 +9,16 @@
 	import gsap from "gsap";
 	
 	import MenuCard from "$lib/components/restaurants/menuCard.svelte";
-	import { restaurantsCache } from "$lib/global/cache.svelte.ts";
+	import { restaurantsCache } from "$lib/global/cache.svelte";
 	
 	import type { restaurantData } from "$lib/types.ts"
 	
 	let { data } = $props()
-	let { restaurant } = data
+	let { restaurant } = $derived(data)
 	let menuContainer
 	let menus = $state({})
+
+	console.log(restaurant)
 	
 	const extractCategories = async  (restaurantData: restaurantData) => {
 		const data = await restaurantData
@@ -80,7 +82,7 @@
 	<div class="relative">
 		<div class="aspect-[16/6] overflow-hidden">
 			<img
-			src={"http://localhost:8000/media/banner.jpg"}
+			src={restaurant.banner ? restaurant.banner : restaurant.image}
 			alt={restaurant.name}
 			class="w-full h-full object-cover"
 			/>
