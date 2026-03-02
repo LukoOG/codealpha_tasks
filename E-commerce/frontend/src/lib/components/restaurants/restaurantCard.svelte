@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import fallback from "$lib/assets/fallback.jpeg"
-	let { url, restaurant } = $props()
+	import fallback from "$lib/assets/fallback.jpg"
+	let { restaurant } = $props()
+	console.log(restaurant.image)
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div onkeydown={undefined} onclick={()=>goto(`restaurants/${restaurant.id}`)} class="bg-card rounded-lg overflow-hidden border border-border cursor-pointer transition-all hover:shadow-lg">
 	<div class="aspect-video overflow-hidden">
-	{#if restaurant.img}
+	{#if restaurant.image}
 		<img
-		  src={url}
+		  src={restaurant.image}
 		  alt={restaurant.name}
 		  class="w-full h-full object-cover transition-transform hover:scale-105"
 		/>

@@ -28,8 +28,7 @@
 		<!-- Restaurant grid -->
 		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each data.restaurants as restaurant}
-				{@const url = "http://localhost:8000/media/banner.jpg"}
-				<RestaurantCard {url} {restaurant}/>
+				<RestaurantCard {restaurant}/>
 			{/each}
 		</div>
 	</div>
