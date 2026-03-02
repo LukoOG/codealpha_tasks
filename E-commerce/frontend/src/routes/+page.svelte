@@ -2,10 +2,11 @@
 	import { page } from "$app/state"
 	import { goto } from "$app/navigation";
 	import { PUBLIC_UNSPLASH_KEY } from "$env/static/public";
+	import defaultImg from "$lib/assets/default.jpg"
 
-	let pizzaUrl = $state<string>();
-	let burgerUrl = $state<string>();
-	let sushiUrl = $state<string>();
+	let pizzaUrl = $state<string>(defaultImg);
+	let burgerUrl = $state<string>(defaultImg);
+	let sushiUrl = $state<string>(defaultImg);
 
 	const getUnsplashImage = async (query?: string) => {
 		const res = await fetch(`https://api.unsplash.com/photos/random?query=${query}&client_id=${PUBLIC_UNSPLASH_KEY}`)
