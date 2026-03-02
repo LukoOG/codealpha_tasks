@@ -13,7 +13,7 @@
 		console.log(res.ok)
 		if(res.ok){
 			console.log(data.urls)
-			return data.urls.small
+			return `${data.urls.small}&w=500&h=500&fit=crop`
 		}
 	}
 
@@ -60,22 +60,21 @@
   </div>
 
 	<!-- Featured Products Section -->
-	<!-- Direcly lik eACH ON ETO A RETAURAN T -->
-	<div class="featured mt-16 flex flex-row justify-between mx-auto px-6 max-w-6xl">
-		<div class="bg-white rounded-2xl shadow-md p-16	 text-center">
-			<img src={pizzaUrl} alt="Pizza" class="rounded-xl mx-auto mb-4"/>
+	<div class="featured mt-16 flex flex-row justify-between min-h-72 mx-auto px-6 max-w-6xl">
+		<div class="bg-white rounded-2xl shadow-md p-16	text-center">
+			<img src={pizzaUrl} alt="Pizza" class="rounded-xl h-48 w-48 mx-auto mb-4"/>
 			<h3 class="text-xl font-semibold">Pizza</h3>
 			<p class="text-gray-500">Cheesy, hot & delicious</p>
 		</div>
 		
 		<div class="bg-white rounded-2xl shadow-md p-16 text-center">
-			<img src={burgerUrl} alt="Burger" class="rounded-xl mx-auto mb-4"/>
+			<img src={burgerUrl} alt="Burger" class="rounded-xl h-48 w-48 mx-auto mb-4"/>
 			<h3 class="text-xl font-semibold">Burgers</h3>
 			<p class="text-gray-500">Juicy grilled perfection</p>
 		</div>
 		
 		<div class="bg-white rounded-2xl shadow-md p-16 text-center">
-			<img src={sushiUrl} alt="Sushi" class="rounded-xl mx-auto mb-4"/>
+			<img src={sushiUrl} alt="Sushi" class="rounded-xl h-48 w-48 mx-auto mb-4"/>
 			<h3 class="text-xl font-semibold">Sushi</h3>
 			<p class="text-gray-500">Fresh & healthy rolls</p>
 		</div>
