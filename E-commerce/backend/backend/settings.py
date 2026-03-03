@@ -55,14 +55,14 @@ CORS_ALLOWED_ORIGINS = ("http://localhost:5173", "https://svellit-diamond.vercel
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://swix-lake.vercel.app",
+    "https://svellit-diamond.vercel.app",
     "http://localhost:5173",
 ]
 #provisional
-CSRF_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = "None"
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SAMESITE = "None"
+# SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = "backend.urls"
 
