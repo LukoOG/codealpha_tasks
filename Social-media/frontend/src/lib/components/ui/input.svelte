@@ -1,6 +1,6 @@
 <script lang="ts">
 	interface inputProps{
-		type: string,
+		type?: string,
 		className?: string,
 		value?: string | number | undefined,
 		disabled?: boolean,

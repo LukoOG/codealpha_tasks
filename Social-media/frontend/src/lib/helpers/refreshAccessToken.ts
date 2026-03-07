@@ -1,42 +1,41 @@
-import {PUBLIC_BACKEND_URL} from "$env/static/public"
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
-export default async function refreshAccessToken(event: any) {
-  const refresh = event.cookies.get("refreshToken");
-  if (!refresh) return null;
-  
+export default async function refreshAccessToken(event: any): Promise<string|undefined> {
+	const refresh = event.cookies.get('refreshToken');
+	if (!refresh) return;
 
-  try {
-    const res = await fetch(`${PUBLIC_BACKEND_URL}/api/auth/token/refresh`, {
-      method: "POST",
-	  headers:{
-		  "Authorization": `Bearer ${event.cookies.get("accessToken")}`,
-		  "Content-Type":"application/json",
-	  },
-      body: JSON.stringify({ refresh }),
-	  credentials: "include"
-    });
-	
-    if (!res.ok) throw new Error("Failed to refresh access token");
-    const data = await res.json();
+	try {
+		const res = await fetch(`${PUBLIC_BACKEND_URL}/api/auth/token/refresh`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${event.cookies.get('accessToken')}`,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ refresh }),
+			credentials: 'include'
+		});
 
-    if (data.access) {
-      // reset accessToken cookie
-      event.cookies.set("accessToken", data.access, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 60 * 15
-      });
-      return data.access;
-    }
-  } catch (err) {
-    console.error("Refresh token failed:", err);
+		if (!res.ok) throw new Error('Failed to refresh access token');
+		const data = await res.json();
 
-    // Clear both cookies
-    event.cookies.delete("accessToken", { path: "/" });
-    event.cookies.delete("refreshToken", { path: "/" });
+		if (data.access) {
+			// reset accessToken cookie
+			event.cookies.set('accessToken', data.access, {
+				httpOnly: true,
+				secure: true,
+				sameSite: 'lax',
+				path: '/',
+				maxAge: 60 * 15
+			});
+			return data.access;
+		}
+	} catch (err) {
+		console.error('Refresh token failed:', err);
 
-    return null;
-  }
+		// Clear both cookies
+		event.cookies.delete('accessToken', { path: '/' });
+		event.cookies.delete('refreshToken', { path: '/' });
+
+		return;
+	}
 }
