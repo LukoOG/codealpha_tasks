@@ -26,7 +26,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	} else {
 		access = await refreshAccessToken(event);
-		event.locals.user = access ? jwt.decode(access) : null;
+		event.locals.user = access ? jwt.verify(access, JWT_SECRET) : null;
 	}
 	return resolve(event);
 };
