@@ -81,7 +81,8 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False, #we do that from the frontend
-
+    
+    "SIGNING_KEY":os.environ.get("JWT_SECRET"),
     "ALGORITHM": "HS256",
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
