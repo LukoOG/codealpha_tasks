@@ -114,13 +114,25 @@ class LoginTokenObtainPairView(TokenObtainPairView):
 class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh = request.data.get("refresh")
-        if refresh is None or not refresh:
+        if not refresh:
             return Response(
                 {"detail": "Refresh token missing"}, status=status.HTTP_401_UNAUTHORIZED
             )
         try:
-            token = RefreshToken(refresh)
-            access = str(token.access_token)
+            old_refresh = RefreshToken(refresh)
+
+            user_id = old_refresh["user_id"]
+            user = User.objects.get(id=user_id)
+            print(user)
+
+            old_refresh.blacklist()
+
+            new_refresh = RefreshToken.for_user(user)      
+            new_refresh["email"] = user.email
+            new_refresh["username"] = user.username
+            new_refresh["avatar"] = user.profile_pic.url
+            
+            access = str(new_refresh.access_token)
         except Exception:
             return Response(
                 {"detail": "Invalid refresh token"}, status=status.HTTP_401_UNAUTHORIZED
@@ -136,7 +148,9 @@ class CustomTokenRefreshView(TokenRefreshView):
             max_age=60 * 15,
         )
         """
-        return Response({"success": True, "access": access})
+        return Response(
+            {"success": True, "refresh": str(new_refresh), "access": access}
+        )
 
 
 class LogoutView(APIView):

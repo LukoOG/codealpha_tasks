@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["codealpha-tasks-oyzj.onrender.com", "localhost"]
+ALLOWED_HOSTS = ["codealpha-tasks-oyzj.onrender.com"]
 
 #Logging
 LOGGING = {
@@ -24,14 +24,14 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'level': 'DEBUG',  # Change to INFO for less verbosity
+            'level': 'INFO',  # Change to INFO for less verbosity
             'class': 'logging.StreamHandler',
         },
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'DEBUG',  # Change to INFO or ERROR for less verbosity
+            'level': 'INFO',  # Change to INFO or ERROR for less verbosity
             'propagate': True,
         },
     },
