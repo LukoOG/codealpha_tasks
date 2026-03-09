@@ -12,6 +12,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const user = jwt.decode(access);
 			event.locals.user = user;			
 		}catch(error){
+			console.warn(error)
 			console.warn("Access expired, attempting refresh...");
 			console.log("Access expired, attempting refresh...");
 			access = await refreshAccessToken(event);

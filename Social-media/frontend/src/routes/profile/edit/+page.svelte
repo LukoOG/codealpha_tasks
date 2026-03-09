@@ -15,7 +15,7 @@
 	let imageInput = $state<HTMLInputElement>();
 
 	// svelte-ignore state_referenced_locally
-		let previewUrl = $state<string | null>(userData.profile_pic);
+	let previewUrl = $state<string | null>(userData.profile_pic);
 
 	function handleFileChange(event: Event) {
 		const file = (event.target as HTMLInputElement).files?.[0];
@@ -44,11 +44,11 @@
 		disableBtn = true;
 
 		return async ({ update, result }) => {
-			await update();
-			if (result.success) {
+			if (result.success === true) {
 				await invalidateAll();
 			}
 			disableBtn = false;
+			await update();
 		};
 	};
 </script>
@@ -68,7 +68,13 @@
 	</div>
 
 	<!-- Form -->
-	<form method="POST" enctype="multipart/form-data" action="?/update" use:enhance={handleEnhance} class="p-6">
+	<form
+		method="POST"
+		enctype="multipart/form-data"
+		action="?/update"
+		use:enhance={handleEnhance}
+		class="p-6"
+	>
 		<div class="space-y-8">
 			<!-- Avatar Section -->
 			<div class="flex items-center gap-4">

@@ -12,6 +12,7 @@ export const load = async ({ cookies, fetch }) => {
 	
 	if (res.ok){
 		const data = await res.json()
+		console.log(data)
 		return {
 			posts: data.results,
 			next: data.next,

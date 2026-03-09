@@ -17,6 +17,7 @@
 	];
 	
 	let { user } = $props();
+	// $inspect(user)
 	let isAuthenticated = $derived.by(()=>user ? true : false)
 	
 	function getNavCls(isActive: boolean) {

@@ -12,7 +12,7 @@
 	let { data } = $props()
 	let { posts, userData, followers, user } = $derived(data)
 	let isFollowing = $derived(followers ? followers.some((follower)=>follower.username === user.username) : false);
-	$inspect(data)
+	// $inspect(data)
 	
 	let username = $derived(page.params.username)
 	

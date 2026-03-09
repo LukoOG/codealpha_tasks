@@ -5,8 +5,8 @@
 	let { data } = $props()
 	let { posts: p, user } = $derived(data)
 	
+	// $inspect("this is P", data)
 	let posts = $state([...p]);
-	$inspect(posts)
 	
 </script>
 

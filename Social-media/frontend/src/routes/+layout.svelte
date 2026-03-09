@@ -20,7 +20,7 @@
 		<Sidebar user={data.user} />
 		<div class="flex-1">
 			<div class="flex-1">
-				<header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+				<header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
 					<div class="container flex h-14 items-center">
 						<!-- <SidebarTrigger class="md:hidden" /> -->
 							<div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
