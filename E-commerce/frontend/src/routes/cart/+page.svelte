@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { enhance } from "$app/forms"
-	import { PUBLIC_BACKEND_URL } from "$env/static/public"
 	import { cartItemsCount} from "$lib/global/cache.svelte.ts";
 	
 	let { cart, user } = page.data
@@ -71,7 +70,7 @@
 
 			<div bind:this={containerRef} class="space-y-4 mb-8">
 				{#each cartItems as item}
-					{@const url = `${PUBLIC_BACKEND_URL}/${item.product.image}`}
+					{@const url = `${item.product.image}`}
 						<div class="cart-item bg-card rounded-lg p-6 border border-border flex items-center gap-4">
 							<img src={url} alt={item.name} class="w-20 h-20 object-cover rounded-md"/>
 
